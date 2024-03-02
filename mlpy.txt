@@ -1,0 +1,763 @@
+P1 Design a simple machine learning model to train the training instances & test the same using Python.
+Code:	#Library for random integers
+from random import randint
+#Library for Linear Regression
+from sklearn.linear_model import LinearRegression
+#setting the limit of the numbers
+TRAIN_SET_LIMIT=1000
+#creating the data
+TRAIN_SET_COUNT=100
+#creating list for input and output
+TRAIN_INPUT=list()
+TRAIN_OUTPUT=list()
+#creating loop through the data items
+for i in range(TRAIN_SET_COUNT):
+    a=randint(0,TRAIN_SET_LIMIT)
+    b=randint(0,TRAIN_SET_LIMIT)
+    c=randint(0,TRAIN_SET_LIMIT)
+    #creating input
+    TRAIN_INPUT.append((a,b,c))
+    #creating output
+    op=a+(2*b)+(3*c)    #this is model for ML
+    TRAIN_OUTPUT.append(op)
+#Initialize the Linear Regression
+model_predictor = LinearRegression(n_jobs=-1)
+#Fill the model with data
+model_predictor.fit(X=TRAIN_INPUT,y=TRAIN_OUTPUT)
+#Random test data
+X_TEST=[[10,20,30]]
+outcome=model_predictor.predict(X=X_TEST)
+print(outcome)
+coefficients=model_predictor.coef_
+print(coefficients)
+
+ 
+P1 Implement and demonstrate the FIND-S algorithm
+Code:	import csv
+num_attributes=5
+a=[]
+hypothesis=['0','0','0','0']
+print("\n The given training data set \n")
+with open('1BFile.csv','r') as csvfile:
+    reader=csv.reader(csvfile)
+    for row in reader:
+        a.append(row)
+        print(row)
+print("\n The initial value of hypothesis")
+print(hypothesis)
+hypothesis=a[1]
+print("\n Using FIND-S : Finding a maximally specific hypothesis \n")
+for i in range(0,len(a)):
+    if a[i][num_attributes]=='Positive':
+        for j in range(0,num_attributes):
+            if a[i][j]!=hypothesis[j]:
+                hypothesis[j]='?'
+            else:
+                hypothesis[j]=a[i][j]
+    print("For training instance no=:() the hypothesis is",format(i),hypothesis)
+print("\n The maximally specific hypothesis for a given training:\n",hypothesis)
+
+  
+
+
+P2 Perform data loading, Feature selection
+#Code:	import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+dataset=pd.read_csv("winequality_red.csv")
+#print(dataset)
+x=dataset.iloc[:,0:11].values
+y=dataset.iloc[:,11].values
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=0)
+from sklearn.preprocessing import StandardScaler
+sc=StandardScaler()
+x_train=sc.fit_transform(x_train)
+x_test=sc.transform(x_test)
+from sklearn.decomposition import PCA
+pca=PCA(n_components=2)
+x_train=pca.fit_transform(x_train)
+x_test=pca.transform(x_test)
+from sklearn.linear_model import LogisticRegression
+classifier=LogisticRegression(random_state=0)
+classifier.fit(x_train,y_train)
+y_pred=classifier.predict(x_test)
+from sklearn.metrics import confusion_matrix
+cm=confusion_matrix(y_test,y_pred)
+print("----Confusion Matrix----")
+print(cm)
+from matplotlib.colors import ListedColormap
+x_set,y_set=x_train,y_train
+x1,x2=np.meshgrid(
+    np.arange(start=x_set[:,0].min()-1,stop=x_set[:,0].max()+1,step=0.01),
+    np.arange(start=x_set[:,1].min()-1,stop=x_set[:,1].max()+1,step=0.01))
+plt.contourf(x1,x2,classifier.predict
+             (np.array([x1.ravel(),x2.ravel()+1]).T).reshape(x1.shape),
+             alpha=0.75,cmap=ListedColormap(('yellow','white','red')))
+plt.xlim(x1.min(),x1.max())
+plt.ylim(x2.min(),x2.max())
+for i,j in enumerate(np.unique(y_set)):
+    plt.scatter(
+        x_set[y_set==j,0],
+        x_set[y_set==j,1],
+        c=ListedColormap(('red','green','blue'))(i),label=j)
+plt.title('Logistic Regression Training Set')
+plt.xlabel('PC1')
+plt.ylabel('PC2')
+plt.legend()
+plt.show()
+from matplotlib.colors import ListedColormap
+x_set,y_set=x_test,y_test
+x1,x2=np.meshgrid(
+    np.arange(start=x_set[:,0].min()-1,stop=x_set[:,0].max()+1,step=0.01),
+    np.arange(start=x_set[:,1].min()-1,stop=x_set[:,1].max()+1,step=0.01))
+plt.contourf(x1,x2,classifier.predict
+             (np.array([x1.ravel(),x2.ravel()+1]).T).reshape(x1.shape),
+             alpha=0.75,cmap=ListedColormap(('yellow','white','red')))
+for i,j in enumerate(np.unique(y_set)):
+    plt.scatter(
+        x_set[y_set==j,0],
+        x_set[y_set==j,1],
+        c=ListedColormap(('red','green','blue'))(i),label=j)
+plt.title('Logistic Regression Testing Set')
+plt.xlabel('PC1')
+plt.ylabel('PC2')
+plt.legend()
+plt.show()
+Output:
+ 
+ 
+  
+P2B For a given set of training data examples stored in a .CSV file, implement and demonstrate Candidate-Elimination algorithm to output a description of the set of all hypotheses consistent with the training examples.
+#Code:	import numpy as np
+import pandas as pd
+data = pd.DataFrame(data=pd.read_csv('2BFile.csv'))
+print(data)
+concepts = np.array(data.iloc[:,0:-1])
+print("Independent Entities")
+print(concepts)
+target = np.array(data.iloc[:,-1])
+print("Dependent Entity")
+print(target)
+def learn(concepts, target):
+    specific_h = concepts[0].copy()
+    print("initialization of specific_h and general_h")
+    print(specific_h)
+    general_h = [["?" for i in range(len(specific_h))]
+                 for i in range(len(specific_h))]
+    print(general_h)
+    for i, h in enumerate(concepts):
+        if target[i] == "yes":
+            for x in range(len(specific_h)):
+                if h[x]!= specific_h[x]:
+                    specific_h[x] ='?'
+                    general_h[x][x]='?'
+                print(specific_h)
+            print(specific_h)
+        if target[i] == "no":
+            for x in range(len(specific_h)):
+                 if h[x]!= specific_h[x]:
+                     general_h[x][x]=specific_h[x]
+                 else:
+                     general_h[x][x]='?'
+        print(" steps of Candidate Elimination Algorithm",i+1)
+        print(specific_h)
+        print(general_h)
+    indices=[i for i,val in enumerate(general_h) if val ==['?','?','?','?','?','?']]
+    for i in indices:
+        general_h.remove(['?','?','?','?','?','?'])
+        return specific_h,general_h
+s_final, g_final = learn(concepts, target)
+print("Final Specific_h:", s_final, sep="\n")
+print("Final General_h:", g_final, sep="\n")
+Output:
+ 
+ 
+ 
+P3A Write a program to implement the naïve Bayesian classifier for a sample training data set stored as a 
+.CSV file. Compute the accuracy of the classifier, considering few test data sets.
+Dataset File: ('tennisdata.csv')
+	
+Outlook Temperature Humidity Windy Play Tennis
+Sunny	 Hot	High	FALSE	No
+Sunny	 Hot	High	TRUE	No
+Overcast Hot	High	FALSE	Yes
+Rainy	 Mild	High	FALSE	Yes
+Rainy	 Cool	Normal	FALSE	Yes
+Rainy	 Cool	Normal	TRUE	No
+Overcast Cool	Normal	TRUE	Yes
+Sunny	 Mild	High	FALSE	No
+Sunny	 Cool	Normal	FALSE	Yes
+Rainy	 Mild	Normal	FALSE	Yes
+Sunny	 Mild	Normal	TRUE	Yes
+Overcast Mild	High	TRUE	Yes
+Overcast Hot	Normal	FALSE	Yes
+Rainy	 Mild	High	TRUE	No
+
+#Code:	import pandas as pd
+from sklearn import tree
+from sklearn.preprocessing import LabelEncoder
+from sklearn.naive_bayes import GaussianNB
+data = pd.read_csv('tennisdata.csv')
+print("The first 5 values of data is :\n",data.head())
+X = data.iloc[:,:-1]
+print("\nThe First 5 values of train data is\n",X.head())
+y = data.iloc[:,-1]
+print("\nThe First 5 values of train output is\n",y.head())
+le_outlook = LabelEncoder()
+X.Outlook = le_outlook.fit_transform(X.Outlook)
+le_Temperature = LabelEncoder()
+X.Temperature = le_Temperature.fit_transform(X.Temperature)
+le_Humidity = LabelEncoder()
+X.Humidity = le_Humidity.fit_transform(X.Humidity)
+le_Windy = LabelEncoder()
+X.Windy = le_Windy.fit_transform(X.Windy)
+print("\nNow the Train data is :\n",X.head())
+le_PlayTennis = LabelEncoder()
+y = le_PlayTennis.fit_transform(y)
+print("\nNow the Train output is\n",y)
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.20)
+classifier = GaussianNB()
+classifier.fit(X_train,y_train)
+from sklearn.metrics import accuracy_score
+print("Accuracy is:",accuracy_score(classifier.predict(X_test),y_test))
+Output:
+ 
+P3B Write a program to implement Decision Tree and Random Forest with Prediction, Test Score and confusion matrix.
+#Code:	import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import metrics
+import seaborn as sns
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn import tree
+iris = load_iris()
+data = pd.DataFrame(data = iris.data, columns = iris.feature_names)
+print(data)
+data['Species'] = iris.target
+target = np.unique(iris.target)
+target_n = np.unique(iris.target_names)
+target_dict = dict(zip(target, target_n))
+data['Species'] = data['Species'].replace(target_dict)
+x = data.drop(columns = "Species")
+y = data["Species"]
+names_features = x.columns
+target_labels = y.unique()
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state = 93)
+from sklearn.tree import DecisionTreeClassifier
+dtc = DecisionTreeClassifier(max_depth = 3, random_state =93)
+dtc.fit(x_train, y_train)
+plt.figure(figsize = (30,10), facecolor = 'b')
+Tree = tree.plot_tree(dtc, feature_names = names_features, class_names = target_labels, rounded = True, filled = True, fontsize = 14)
+plt.show()
+y_pred = dtc.predict(x_test)
+confusion_matrix = metrics.confusion_matrix(y_test, y_pred)
+matrix = pd.DataFrame(confusion_matrix)
+axis = plt.axes()
+sns.set(font_scale = 1.3)
+plt.figure(figsize = (10,7))
+sns.heatmap(matrix, annot = True, fmt ="g", ax = axis, cmap = "magma")
+axis.set_title('Confusion Matrix')
+axis.set_xlabel("Predicted Values", fontsize = 10)
+axis.set_xticklabels([''] + target_labels)
+axis.set_ylabel("True labels", fontsize = 10)
+axis.set_yticklabels(list(target_labels), rotation = 0)
+plt.show()
+Output:
+ 
+  
+P4A For a given set of training data examples stored in a .CSV file implement Least Square Regression algorithm.
+# Code:	import pandas as pd
+def calculateB(x, y, n):
+    sx = sum(x)
+    sy = sum(y)
+    sxsy = 0
+    sx2 = 0
+    for i in range(n):
+        sxsy += x[i] * y[i]
+        sx2 += x[i] * x[i]
+    b = (n * sxsy - sx * sy)/(n * sx2 - sx * sx)
+    return b
+def leastRegLine(X,Y,n):
+    b = calculateB(X, Y, n)
+    meanX = int(sum(X)/n)
+    meanY = int(sum(Y)/n)
+    a = meanY - b * meanX
+    print("Regression line:")
+    print("Y = ", '%.3f'%a, " + ", '%.3f'%b, "*X", sep="")
+data = pd.read_csv('a.csv')
+X=data['X']
+Y = data['Y']
+n = len(X)
+leastRegLine(X, Y, n)
+Output:
+ 
+P4B For given set of training data stored in .CSV file implement Logistic Regression algorithm.
+# Code:	import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+dataset = pd.read_csv("Prac4B.csv")
+x = dataset.iloc[:, [2, 3]].values
+y = dataset.iloc[:, 4].values
+from sklearn.model_selection import train_test_split
+xtrain, xtest, ytrain, ytest = train_test_split(
+    x, y, test_size=0.25, random_state=0)
+from sklearn.preprocessing import StandardScaler
+sc_x = StandardScaler()
+xtrain = sc_x.fit_transform(xtrain)
+xtest = sc_x.transform(xtest)
+print (xtrain[0:10, :])
+from sklearn.linear_model import LogisticRegression
+classifier = LogisticRegression(random_state = 0)
+classifier.fit(xtrain, ytrain)
+y_pred = classifier.predict(xtest)
+from sklearn.metrics import accuracy_score
+print ("Accuracy : ", accuracy_score(ytest, y_pred))
+from matplotlib.colors import ListedColormap
+X_set, y_set = xtest, ytest
+X1, X2  = np.meshgrid(np.arange(start = X_set[:, 0].min() - 1,
+stop = X_set[:,0].max() + 1, step = 0.01),
+np.arange(start = X_set[:, 1].min() - 1,
+stop = X_set[:, 1].max() + 1, step = 0.01))
+plt.contourf(X1, X2, classifier.predict(
+np.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape),
+alpha = 0.75, cmap = ListedColormap(('red', 'green')))
+plt.xlim(X1.min(), X1.max())
+plt.ylim(X2.min(), X2.max())
+for i, j in enumerate(np.unique(y_set)):
+    plt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1],
+    color = ListedColormap(('red', 'green'))(i), label = j)   
+plt.title('Classifier (Test set)')
+plt.xlabel('Age')
+plt.ylabel('Estimated Salary')
+plt.legend()
+plt.show()
+Output:
+ 
+ 
+
+ 
+P5A Write a program to demonstrate the working of the decision tree based ID3 algorithm. Use an appropriate data set for building the decision tree and apply this knowledge to classify a new sample.
+# Code:	import math
+import csv
+def load_csv(filename):
+    lines=csv.reader(open(filename,"r"))
+    dataset=list(lines)
+    headers=dataset.pop(0)
+    return dataset,headers
+class Node:
+    def __init__(self,attribute):
+        self.attribute=attribute
+        self.children=[]
+        self.answer=""
+def subtables(data,col,delete):
+    dic={}
+    coldata=[row[col] for row in data]
+    attr= list(set(coldata))
+    counts=[0]*len(attr)
+    r=len(data)
+    c=len(data[0])
+    for x in range(len(attr)):
+        for y in range(r):
+            if data[y][col]==attr[x]:
+                counts[x]+=1
+    for x in range(len(attr)):
+        dic[attr[x]]=[[0 for i in range(c)] for j in range(counts[x])]
+        pos=0
+        for y in range(r):
+            if data[y][col]==attr[x]:
+                if delete:
+                    del data[y][col]
+                dic[attr[x]][pos]=data[y]
+                pos+=1
+    return attr,dic
+def entropy(S):
+    attr=list(set(S))
+    if len(attr)==1:
+        return 0
+    counts=[0,0]
+    for i in range(2):
+        counts[i]=sum([1 for x in S if attr[i]==x])/(len(S)*1.0)
+    sums=0
+    for cnt in counts:
+        sums+=-1*cnt*math.log(cnt,2)
+    return sums
+def compute_gain(data,col):
+    attr,dic=subtables(data,col,delete=False)
+    total_size=len(data)
+    entropies=[0]*len(attr)
+    ratio=[0]*len(attr)
+    total_entropy=entropy([row[-1] for row in data])
+    for x in range(len(attr)):
+        ratio[x]=len(dic[attr[x]])/(total_size*1.0)
+        entropies[x]=entropy([row[-1] for row in dic[attr[x]]])
+        total_entropy-=ratio[x]*entropies[x]
+    return total_entropy
+def build_tree(data,features):
+    lastcol=[row[-1] for row in data]
+    if(len(set(lastcol)))==1:
+        node=Node("")
+        node.answer=lastcol[0]
+        return node
+    n=len(data[0])-1
+    gains=[0]*n
+    for col in range(n):
+        gains[col]=compute_gain(data,col)
+    split=gains.index(max(gains))
+    node=Node(features[split])
+    fea=features[:split]+features[split+1:]
+    attr,dic=subtables(data,split,delete=True)
+    for x in range(len(attr)):
+        child=build_tree(dic[attr[x]],fea)
+        node.children.append((attr[x],child))
+    return node
+def print_tree(node,level):
+    if node.answer!="":
+       print("  "*level,node.answer)
+       return
+    print("  "*level,node.attribute)
+    for values,n in node.children:
+        print("  "*(level+1),values)
+        print_tree(n,level+2)
+def classify(node,x_test,features):
+    if node.answer!="":
+       print(node.answer)
+       return
+    pos=features.index(node.attribute)
+    for value,n in node.children:
+        if x_test[pos]==value:
+            classify(n,x_test,features)
+dataset,features=load_csv("5ADataFile.csv")
+node1=build_tree(dataset,features)
+print("The working of decision tree based ID3 algorithm.")
+print_tree(node1,0)
+testdata,features=load_csv("5ATest.csv")
+for xtest in testdata:
+    print("The test instance:",xtest)
+    print("The label for test instance is: ",end="  ")
+    classify(node1,xtest,features)
+Output:
+ 
+P5B Write a program to implement k-Nearest Neighbor algorithm to classify the iris data set.
+# Code:	import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
+from sklearn import datasets
+from sklearn.model_selection import train_test_split , KFold
+from sklearn.preprocessing import Normalizer
+from sklearn.metrics import accuracy_score
+from sklearn.neighbors import KNeighborsClassifier
+from collections import Counter
+iris = datasets.load_iris()
+iris_df = pd.DataFrame(data= np.c_[iris['data'], iris['target']],columns= iris['feature_names'] + ['target'])
+iris_df.head()
+x= iris_df.iloc[:, :-1]
+y= iris_df.iloc[:, -1]
+x.head()
+y.head()
+x_train, x_test, y_train, y_test= train_test_split(x, y,test_size= 0.2, shuffle= True, random_state= 0)
+x_train= np.asarray(x_train)
+y_train= np.asarray(y_train)
+x_test= np.asarray(x_test)
+y_test= np.asarray(y_test)
+print(f'training set size: {x_train.shape[0]} samples')
+print(f'test set size: {x_test.shape[0]} samples')
+scaler= Normalizer().fit(x_train) 
+normalized_x_train= scaler.transform(x_train)
+normalized_x_test= scaler.transform(x_test)
+print('x train before Normalization')
+print(x_train[0:5])
+print('\nx train after Normalization')
+print(normalized_x_train[0:5])
+K=3
+knn=KNeighborsClassifier(K)
+knn.fit(normalized_x_train, y_train)
+y_pred_sklearn= knn.predict(normalized_x_test)
+print(y_pred_sklearn)
+Output: 	
+ 
+ 
+P6A Implement different Distance methods (Euclidean) with Prediction, Test Score & Confusion Matrix.
+# Code:	from sklearn import datasets
+from sklearn.model_selection import train_test_split
+#Load the Iris dataset
+iris = datasets.load_iris()
+X = iris.data # Features
+y = iris.target  # Target variable (classes)
+# Split the dataset into a training set and a testing set (70% training, 30% testing)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+from sklearn.metrics import pairwise_distances
+distances=pairwise_distances(X_test,X_train,metric='euclidean')
+import numpy as np
+def find_k_nearest_neighbours(distances,k):
+    k_nearest_neighbours_indices=np.argsort(distances,axis=1)[:,:k]
+    return k_nearest_neighbours_indices
+k=5
+k_nearest_neighbours_indices=find_k_nearest_neighbours(distances,k)
+from scipy.stats import mode
+def predict_majority_class(k_nearest_neighbours_indices,y_train):
+    k_nearest_classes=y_train[k_nearest_neighbours_indices]
+    predictions,_=mode(k_nearest_classes,axis=1)
+    return predictions.ravel()
+y_pred=predict_majority_class(k_nearest_neighbours_indices,y_train)
+from sklearn.metrics import accuracy_score,classification_report,confusion_matrix
+accuracy=accuracy_score(y_test,y_pred)
+print("Accuracy:",accuracy) print("Classification Report:") print(classification_report(y_test,y_pred)) 
+print("Confusion Matrix") print(confusion_matrix(y_test,y_pred))
+Output:
+ 
+P6B Implement the classification model using clustering for the following techniques with 
+# Code:	import csv
+from collections import Counter
+import matplotlib.pyplot as plt
+import numpy as np
+import sklearn.metrics as sm
+from sklearn.mixture import GaussianMixture
+from sklearn.cluster import KMeans
+from sklearn.metrics import accuracy_score,classification_report, confusion_matrix
+class_dict = {'setosa': 0, 'versicolor': 1, 'virginica': 2}
+with open('ds6B.csv') as csvFile:
+    dataset = [line for line in csv.reader (csvFile)]
+    dataset = dataset [1:]
+    x=[]
+    y=[]
+    for line in dataset:
+        x.append(line[:-1])
+        y.append(class_dict[line[-1]])
+    x=np.array (x).astype(float)
+    y=np.array (y).astype(int)
+def rename_clusters(s):
+    cnt=Counter((cl, c2) for cl, c2 in zip(s, y))
+    most_common = cnt.most_common()
+    map_dict = {}
+    for tup in most_common:
+        if not tup[0][0] in map_dict:
+            map_dict[tup[0][0]] = tup[0][1]
+    for i in range(len(s)):
+        s[i] = map_dict[s[i]]
+    return s
+kmeans = KMeans(n_clusters=3)
+kmeans.fit(x)
+y_kmeans=kmeans.predict (x)
+km = rename_clusters (y_kmeans)
+plt.scatter(x[:, 0], x[:, 1], c=km, s=40, cmap='viridis')
+print ("Accuracy KM : ", sm.accuracy_score(y, km))
+plt.show()
+print ("Classification Report:") print (classification_report (y,km))
+print ("Confusion Matrix:")print (confusion_matrix(y,km))
+Output: 
+     
+P7A Implement the classification model using clustering for the following techniques with hierarchical clustering with Prediction, Test Score and Confusion Matrix
+#Code:	import numpy as np
+from scipy.cluster.hierarchy import dendrogram,linkage
+import matplotlib.pyplot as plt
+#randomly chosen dataset
+x=np.array([[1, 2], [1, 4], [1, 0],
+        	      [4, 2], [4, 4], [4, 0]])
+#Perform hierarchical clustering
+z = linkage(x, 'ward')
+# Plot dendrogram
+dendrogram (z)
+plt.title ('Hierarchical Clustering Dendrogram')
+plt.xlabel ('Data point')
+plt.ylabel ('Distance')
+plt.show()
+Output:
+ 
+ 
+
+P8A Write a program to construct a Bayesian network considering medical data. Use this model to demonstrate the diagnosis of heart patients using standard Heart Disease Data Set.
+#Code:	import pandas as pd
+from pgmpy.estimators import MaximumLikelihoodEstimator
+from pgmpy.models import BayesianModel
+from pgmpy.inference import VariableElimination
+data = pd.read_csv("ds8A.csv")
+heart_disease = pd.DataFrame (data)
+print (heart_disease)
+model = BayesianModel 
+([('age', 'Lifestyle'),
+   ('Gender', 'Lifestyle'),
+   ('Family', 'heartdisease'),
+   ('diet', 'cholestrol'),
+   ('Lifestyle', 'diet'),
+   ('cholestrol', 'heartdisease'),
+   ('diet','cholestrol') ])
+model.fit(heart_disease, estimator=MaximumLikelihoodEstimator)
+HeartDisease_infer = VariableElimination (model)
+print ('For Age enter SuperSeniorcitizen:0, Seniorcitizen:1')
+print ("MiddleAged:2, Youth:3, Teen:4")
+print ('For Gender enter Male:0, Female:1')
+print ('For Family History enter Yes:1, No:0')
+print ('For Diet enter High:0, Medium:1')
+print ('for Lifestylp enter Athlete:0, Active:1, Moderate:2, Sedentary:3')
+print ('for Cholesterol enter High:0, Borderline:1, Normal:2')
+q = HeartDisease_infer.query(variables=['heartdisease'], evidence={
+'age': int (input ('Enter Age: ')),
+'Gender': int (input ('Enter Gender: ')),
+'Family': int (input ('Enter Family History: ')),
+'diet': int (input ('Enter Diet: ')),
+'Lifestyle': int (input ('Enter Lifestyle: ')),
+'cholestrol': int (input ('Enter Cholestrol: '))
+})
+print(q)       
+Output:
+ 
+P8B Implement the non-parametric Locally Weighted Regression algorithm in order to fit data points. Select appropriate data set for your experiment and draw graphs.
+# Code:	import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+def kernel (point, xmat, k):
+    m,n = np.shape (xmat)
+    weights = np.mat (np.eye((m)))
+    for j in range (m):
+        diff = point - x[j]
+        weights[j,j] = np.exp(diff*diff.T/(-2.0*k**2))
+    return weights
+def localWeight (point, xmat, ymat, k):
+    wei = kernel (point,xmat,k)
+    W= (x.T* (wei*x)).I* (x.T* (wei*ymat.T))
+    return W
+def localWeightRegression (xmat, ymat, k):
+    m,n= np.shape (xmat)
+    ypred = np.zeros (m)
+    for i in range (m):
+        ypred[i] = xmat[i]*localWeight (xmat[i],xmat,ymat,k)
+    return ypred
+#load data points
+data = pd.read_csv('ds8B.csv')
+bill = np.array(data.total_bill)
+tip = np.array (data.tip)
+#preparing and add 1 in bill
+mbill = np.mat (bill)
+mtip = np.mat (tip)
+m= np.shape (mbill) [1]
+one = np.mat (np.ones(m))
+x= np.hstack((one.T,mbill.T))
+ypred = localWeightRegression (x, mtip,0.5)
+SortIndex = x[:,1].argsort(0)                                                                                           
+xsort=x[SortIndex][:,0]
+fig=plt.figure()
+ax=fig.add_subplot(1,1,1)
+ax.scatter (bill,tip, color='green')
+ax.plot (xsort [:,1], ypred[SortIndex], color= 'red',linewidth=5)
+plt.xlabel ('Total bill')
+plt.ylabel ('Tip')
+plt.show();
+Output:
+ 
+ 
+P9A Build an Artificial Neural Network by implementing the Backpropagation algorithm and test the same using appropriate data sets.
+# Code:	import numpy as np
+X = np.array(([2, 9], [1, 5], [3, 6]), dtype=float)
+y = np.array(([92], [86], [89]), dtype=float)
+X = X/np.amax(X,axis=0) #maximum of X array longitudinally
+y = y/100
+#Sigmoid Function
+def sigmoid (x):
+    return 1/(1 + np.exp(-x))
+#Derivative of Sigmoid Function
+def derivatives_sigmoid(x):
+    return x * (1 - x)
+#Variable initialization
+epoch=5 #Setting training iterations
+lr=0.1 #Setting learning rate
+inputlayer_neurons = 2 #number of features in data set
+hiddenlayer_neurons = 3 #number of hidden layers neurons
+output_neurons = 1 #number of neurons at output layer
+
+#weight and bias initialization
+wh=np.random.uniform(size=(inputlayer_neurons,hiddenlayer_neurons))
+bh=np.random.uniform(size=(1,hiddenlayer_neurons))
+wout=np.random.uniform(size=(hiddenlayer_neurons,output_neurons))
+bout=np.random.uniform(size=(1,output_neurons))
+#draws a random range of numbers uniformly of dim x*y
+for i in range(epoch):
+    #Forward Propogation
+    hinp1=np.dot(X,wh)
+    hinp=hinp1 + bh
+    hlayer_act = sigmoid(hinp)
+    outinp1=np.dot(hlayer_act,wout)
+    outinp= outinp1+bout
+    output = sigmoid(outinp)
+    #Backpropagation
+    EO = y-output
+    outgrad = derivatives_sigmoid(output)
+    d_output = EO * outgrad
+    EH = d_output.dot(wout.T)
+    hiddengrad = derivatives_sigmoid(hlayer_act)#how much hidden layer wts contributed to error
+    d_hiddenlayer = EH * hiddengrad
+    wout += hlayer_act.T.dot(d_output) *lr   # dotproduct of nextlayererror and currentlayerop
+    wh += X.T.dot(d_hiddenlayer) *lr
+    print ("-----------Epoch-", i+1, "Starts----------")
+    print("Input: \n" + str(X)) 
+    print("Actual Output: \n" + str(y))
+    print("Predicted Output: \n" ,output)
+    print ("-----------Epoch-", i+1, "Ends----------\n")
+print("Input: \n" + str(X)) 
+print("Actual Output: \n" + str(y))
+print("Predicted Output: \n" ,output)
+Output:
+ 
+
+P9B Assuming a set of documents that need to be classified, use the naïve Bayesian Classifier model to perform this task.
+# Code:	import pandas as pd
+msg = pd.read_csv('ds9B.csv', names=['message', 'label'])
+print("Total Instances of Dataset: ", msg.shape[0])
+msg['labelnum'] = msg.label.map({'pos': 1, 'neg': 0})
+X = msg.message
+y = msg.labelnum
+from sklearn.model_selection import train_test_split
+Xtrain, Xtest, ytrain, ytest = train_test_split(X, y)
+from sklearn.feature_extraction.text import CountVectorizer
+count_v = CountVectorizer()
+Xtrain_dm = count_v.fit_transform(Xtrain)
+Xtest_dm = count_v.transform(Xtest)
+df = pd.DataFrame(Xtrain_dm.toarray(),columns=count_v.get_feature_names())
+print(df[0:5])
+from sklearn.naive_bayes import MultinomialNB
+clf = MultinomialNB()
+clf.fit(Xtrain_dm, ytrain)
+pred = clf.predict(Xtest_dm)
+for doc, p in zip(Xtrain, pred):
+    p = 'pos' if p == 1 else 'neg'
+    print("%s -> %s" % (doc, p))
+from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score
+print('Accuracy Metrics: \n')
+print('Accuracy: ', accuracy_score(ytest, pred))
+print('Recall: ', recall_score(ytest, pred))
+print('Precision: ', precision_score(ytest, pred))
+print('Confusion Matrix: \n', confusion_matrix(ytest, pred))
+Output:
+ 
+
+P10 Perform Text pre-processing, Text clustering, classification with Prediction, Test Score & Confusion Matrix
+# Code:	import pandas as pd
+msg = pd.read_csv('ds9B.csv', names=['message', 'label'])
+print("Total Instances of Dataset: ", msg.shape[0])
+msg['labelnum'] = msg.label.map({'pos': 1, 'neg': 0})
+X = msg.message
+y = msg.labelnum
+from sklearn.model_selection import train_test_split
+Xtrain, Xtest, ytrain, ytest = train_test_split(X, y)
+from sklearn.feature_extraction.text import CountVectorizer
+count_v = CountVectorizer()
+Xtrain_dm = count_v.fit_transform(Xtrain)
+Xtest_dm = count_v.transform(Xtest)
+df = pd.DataFrame(Xtrain_dm.toarray(),columns=count_v.get_feature_names())
+print(df[0:5])
+from sklearn.naive_bayes import MultinomialNB
+clf = MultinomialNB()
+clf.fit(Xtrain_dm, ytrain)
+pred = clf.predict(Xtest_dm)
+for doc, p in zip(Xtrain, pred):
+    p = 'pos' if p == 1 else 'neg'
+    print("%s -> %s" % (doc, p))
+from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score
+print('Accuracy Metrics: \n')
+print('Accuracy: ', accuracy_score(ytest, pred))
+print('Recall: ', recall_score(ytest, pred))
+print('Precision: ', precision_score(ytest, pred))
+print('Confusion Matrix: \n', confusion_matrix(ytest, pred))
