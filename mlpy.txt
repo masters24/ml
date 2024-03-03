@@ -60,7 +60,7 @@ print("\n The maximally specific hypothesis for a given training:\n",hypothesis)
   
 
 
-P2 Perform data loading, Feature selection
+P2 Perform data loading, Feature selection (Principal Component Analysis) ,Feature Scoring and Ranking
 #Code:	import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -174,26 +174,7 @@ Output:
  
  
  
-P3A Write a program to implement the naïve Bayesian classifier for a sample training data set stored as a 
-.CSV file. Compute the accuracy of the classifier, considering few test data sets.
-Dataset File: ('tennisdata.csv')
-	
-Outlook Temperature Humidity Windy Play Tennis
-Sunny	 Hot	High	FALSE	No
-Sunny	 Hot	High	TRUE	No
-Overcast Hot	High	FALSE	Yes
-Rainy	 Mild	High	FALSE	Yes
-Rainy	 Cool	Normal	FALSE	Yes
-Rainy	 Cool	Normal	TRUE	No
-Overcast Cool	Normal	TRUE	Yes
-Sunny	 Mild	High	FALSE	No
-Sunny	 Cool	Normal	FALSE	Yes
-Rainy	 Mild	Normal	FALSE	Yes
-Sunny	 Mild	Normal	TRUE	Yes
-Overcast Mild	High	TRUE	Yes
-Overcast Hot	Normal	FALSE	Yes
-Rainy	 Mild	High	TRUE	No
-
+P3A Write a program to implement the naïve Bayesian classifier for a sample training data set stored as a .CSV file. Compute the accuracy of the classifier, considering few test data sets.
 #Code:	import pandas as pd
 from sklearn import tree
 from sklearn.preprocessing import LabelEncoder
@@ -509,7 +490,7 @@ print("Accuracy:",accuracy) print("Classification Report:") print(classification
 print("Confusion Matrix") print(confusion_matrix(y_test,y_pred))
 Output:
  
-P6B Implement the classification model using clustering for the following techniques with 
+P6B Implement the classification model using clustering for the following techniques with K means clustering with Prediction, Test Score and Confusion Matrix.
 # Code:	import csv
 from collections import Counter
 import matplotlib.pyplot as plt
