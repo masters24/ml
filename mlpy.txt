@@ -38,7 +38,7 @@ num_attributes=5
 a=[]
 hypothesis=['0','0','0','0']
 print("\n The given training data set \n")
-with open('1BFile.csv','r') as csvfile:
+with open('Generate.csv','r') as csvfile:
     reader=csv.reader(csvfile)
     for row in reader:
         a.append(row)
