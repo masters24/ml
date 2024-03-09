@@ -1,744 +1,1055 @@
-P1 Design a simple machine learning model to train the training instances & test the same using Python.
-Code:	#Library for random integers
-from random import randint
-#Library for Linear Regression
-from sklearn.linear_model import LinearRegression
-#setting the limit of the numbers
-TRAIN_SET_LIMIT=1000
-#creating the data
-TRAIN_SET_COUNT=100
-#creating list for input and output
-TRAIN_INPUT=list()
-TRAIN_OUTPUT=list()
-#creating loop through the data items
-for i in range(TRAIN_SET_COUNT):
-    a=randint(0,TRAIN_SET_LIMIT)
-    b=randint(0,TRAIN_SET_LIMIT)
-    c=randint(0,TRAIN_SET_LIMIT)
-    #creating input
-    TRAIN_INPUT.append((a,b,c))
-    #creating output
-    op=a+(2*b)+(3*c)    #this is model for ML
-    TRAIN_OUTPUT.append(op)
-#Initialize the Linear Regression
-model_predictor = LinearRegression(n_jobs=-1)
-#Fill the model with data
-model_predictor.fit(X=TRAIN_INPUT,y=TRAIN_OUTPUT)
-#Random test data
-X_TEST=[[10,20,30]]
-outcome=model_predictor.predict(X=X_TEST)
-print(outcome)
-coefficients=model_predictor.coef_
-print(coefficients)
+Practical No: 1
+RPA Basics: Sequences and Flowcharts.
+a)	Create a simple sequence-based project.
+	To create a sequence that asks the user for his first and last name, and his hair color, and then displays his answers, do the following: 
+1.	Create a blank process and, on the Design tab, in the File group, select New > Sequence. The New Sequence window is displayed.
+	Note: You can also add a Sequence activity to the Designer panel to create a new sequence, or simply drag an activity from the Activities panel and Studio automatically adds a 	parent sequence to it. 
+2.	In the Name field type a name for the automation, such as "First Sequence", and leave the default project location or add a subfolder. Click Create. The Designer panel is updated 	accordingly. 
+3.	Create three String variables such as FirstName, LastName, and HairColor, so that you can store data from the user in them. Leave the Default field empty, to indicate that there is 	no default value. 
+4.	Drag three Input Dialog activities to the Designer panel, one under the other. 
+5.	Select the first Input Dialog and, in the Properties panel, add a Label asking for the first name of the user, and a custom Title. 
+6.	In the Result field add the FirstName variable. This indicates that this variable is going to be updated with the value added by the user at this point. 
+7.	Repeat steps 6 - 7 for the second and third Input Dialog activities to ask the user for his last name and hair color, and store them in the LastName and HairColor variables. 
+8.	Add a Message Box activity under the third Input Dialog. 
+9.	Select the Message Box and, in the Properties panel, in the Text field, add the variables and a string to enable you to display all information gathered from the user, such as: 	FirstName + " " + LastName + " has " + HairColor + " hair." 
+	Note: Remember to add spaces between variables and within strings for an optimal output. 
+	The final project should look as in the following screenshot.
+10.	On the Design tab, in the File group, click Run. The automation is executed. The final output message should look as in the following screenshot.
 
- 
-P1 Implement and demonstrate the FIND-S algorithm
-Code:	import csv
-num_attributes=5
-a=[]
-hypothesis=['0','0','0','0']
-print("\n The given training data set \n")
-with open('Generate.csv','r') as csvfile:
-    reader=csv.reader(csvfile)
-    for row in reader:
-        a.append(row)
-        print(row)
-print("\n The initial value of hypothesis")
-print(hypothesis)
-hypothesis=a[1]
-print("\n Using FIND-S : Finding a maximally specific hypothesis \n")
-for i in range(0,len(a)):
-    if a[i][num_attributes]=='Positive':
-        for j in range(0,num_attributes):
-            if a[i][j]!=hypothesis[j]:
-                hypothesis[j]='?'
-            else:
-                hypothesis[j]=a[i][j]
-    print("For training instance no=:() the hypothesis is",format(i),hypothesis)
-print("\n The maximally specific hypothesis for a given training:\n",hypothesis)
-
-  
+b)	Create a flowchart-based project. 
+1.	Create a blank process and from the Design tab, in the File group, select New > Flowchart. The New Flowchart window is displayed.
+	Note: You can also add a Flowchart activity to the Designer panel to create a new flowchart project.
+2.	In the Name field type a name for the automation, such as "First Flowchart", and leave the default project location or add a subfolder. Click Create. The Designer panel is updated 	accordingly.
+3.	Create two Int32 variables (RandomNumber, GuessNumber) and a String one (Message).
+4.	Set the default value of the Message variable to "Guess a number from 1 to 999." The RandomNumber stores a random number between 1 and 999, GuessNumber stores the user’s guess and 	Message stores the message that is going to be displayed to prompt the user.
+5.	Add an Assign activity to the Designer panel, and connect it to the Start node.
+6.	In the Properties panel, in the To field add the RandomNumber variable.
+7.	In the Value field, type new Random().Next(1,999).
+	This field uses the Random() function to generate a random number between 1 and 999. For more information on variables, see Variables.
+8.	Add an Input Dialog activity to the Designer panel and connect it to the Assign one.
+9.	In the Properties panel, in the Label field, add the Message variable
+10.	In the Result field, add the GuessNumber variable. This activity asks and stores the user’s guesses in the GuessNumber variable.
+11.	Add a Flow Decision activity and connect it to the Input Dialog. This activity enables you to tell the user if he correctly guessed the number or not.
+12.	In the Properties panel, in the Condition field, type GuessNumber = RandomNumber. This enables you to verify if the number added by the user is the same as the randomly-generated 	one.
+13.	Add a Message Box activity and connect it to the True branch of the Flow Decision.
+14.	In the Properties panel, in the Text field, type "Congratulations! You guessed correctly! The number was " + RandomNumber.ToString + ".". This is the message that is going to be 	displayed if the user correctly guessed the number.
+15.	Add a new Flow Decision activity and connect it to the False branch of the previously added Flow Decision.
+16.	In the Properties panel, in the Condition field, type GuessNumber > RandomNumber. This activity enables you to check if the number the user added is bigger than the randomly-	generated one.
+17.	In the DisplayName field, type Comparison. This enables you to easily to tell the difference between the two Flow Decisions used.
+18.	Add an Assign activity and connect it to the True branch of the Comparison activity.
+19.	In the To field, type the Message variable, and in the Value field, type a message indicating that the guess was too high, such as "Too big. Try again.".
+20.	Select the Assign activity and press Ctrl+C. The entire activity and its properties are copied to the Clipboard.
+21.	Press Ctrl + V. A duplicate of the previous Assign activity is displayed.
+22.	Connect it to the False branch of the Comparison activity and, in the Properties panel, in the Value field, type "Too small. Try again.".
+23.	Connect the Assign activities created at steps 18-22 to the Input Dialog. A loop is created, asking the user to type a smaller or bigger number, until he guesses correctly. The 	final project should look as in the screenshot below
 
 
-P2 Perform data loading, Feature selection (Principal Component Analysis) ,Feature Scoring and Ranking
-#Code:	import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-dataset=pd.read_csv("winequality_red.csv")
-#print(dataset)
-x=dataset.iloc[:,0:11].values
-y=dataset.iloc[:,11].values
-from sklearn.model_selection import train_test_split
-x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=0)
-from sklearn.preprocessing import StandardScaler
-sc=StandardScaler()
-x_train=sc.fit_transform(x_train)
-x_test=sc.transform(x_test)
-from sklearn.decomposition import PCA
-pca=PCA(n_components=2)
-x_train=pca.fit_transform(x_train)
-x_test=pca.transform(x_test)
-from sklearn.linear_model import LogisticRegression
-classifier=LogisticRegression(random_state=0)
-classifier.fit(x_train,y_train)
-y_pred=classifier.predict(x_test)
-from sklearn.metrics import confusion_matrix
-cm=confusion_matrix(y_test,y_pred)
-print("----Confusion Matrix----")
-print(cm)
-from matplotlib.colors import ListedColormap
-x_set,y_set=x_train,y_train
-x1,x2=np.meshgrid(
-    np.arange(start=x_set[:,0].min()-1,stop=x_set[:,0].max()+1,step=0.01),
-    np.arange(start=x_set[:,1].min()-1,stop=x_set[:,1].max()+1,step=0.01))
-plt.contourf(x1,x2,classifier.predict
-             (np.array([x1.ravel(),x2.ravel()+1]).T).reshape(x1.shape),
-             alpha=0.75,cmap=ListedColormap(('yellow','white','red')))
-plt.xlim(x1.min(),x1.max())
-plt.ylim(x2.min(),x2.max())
-for i,j in enumerate(np.unique(y_set)):
-    plt.scatter(
-        x_set[y_set==j,0],
-        x_set[y_set==j,1],
-        c=ListedColormap(('red','green','blue'))(i),label=j)
-plt.title('Logistic Regression Training Set')
-plt.xlabel('PC1')
-plt.ylabel('PC2')
-plt.legend()
-plt.show()
-from matplotlib.colors import ListedColormap
-x_set,y_set=x_test,y_test
-x1,x2=np.meshgrid(
-    np.arange(start=x_set[:,0].min()-1,stop=x_set[:,0].max()+1,step=0.01),
-    np.arange(start=x_set[:,1].min()-1,stop=x_set[:,1].max()+1,step=0.01))
-plt.contourf(x1,x2,classifier.predict
-             (np.array([x1.ravel(),x2.ravel()+1]).T).reshape(x1.shape),
-             alpha=0.75,cmap=ListedColormap(('yellow','white','red')))
-for i,j in enumerate(np.unique(y_set)):
-    plt.scatter(
-        x_set[y_set==j,0],
-        x_set[y_set==j,1],
-        c=ListedColormap(('red','green','blue'))(i),label=j)
-plt.title('Logistic Regression Testing Set')
-plt.xlabel('PC1')
-plt.ylabel('PC2')
-plt.legend()
-plt.show()
+c)	Automate UiPath Number Calculation (Addition, Subtraction, Multiplication, Division of numbers). 
+Theory: In this practical we’ll be learning how to perform arithmetic operations like Addition, Subtraction, 
+Multiplication, Division using UiPath Studio  
+Steps to perform:
+1.	Open UiPath Studio -> Start -> New Project-> Click Process       
+2.	Now, create a New Blank Process, name it UiArithmatic and give it a description
+3.	After that, UiPath studio creates the project UiArithmatic with the supporting files:
+4.	Next, to perform arithmetic operations:
+	Double-click the Main.xaml workflow, Click Activities -> search Input Dialog ->Drag and drop it into the sequence:
+	For reading the First Number, set the values Display name, Label, Title, Result (for the result value, go to variables tab and create a variable Num1 in the property window)
+	Similarly, create one more Input Dialog for Second Number, set the values Display name, Label, Title, Result (for the result value, go to variables tab and create a variable Num2 	in the property window). 
+5.	For Arithmetic operations:
+	Click Activities -> search message box -> Drag and drop it into the sequence, then edit the text in 4 message boxes Addition, Subtraction, Multiplication, and Division,       
+6.	To run your project, select debug file -> Run, The output of the UiArithmatic project is:
+       
+d)	Create an automation UiPath project using different types of variables (number, datetime, Boolean, generic, array, data table)
+	Number Variables also known as integer or Int32, and are used to store numeric information. They can be used to perform equations or comparisons, pass important data and many 	others.
+1.	Create a new sequence.
+2.	Create three Int32 variables, BirthYear, CurrentYear and Age. The first stores the user’s birth year,Second Stores CurrentYear Value(In Default mention number 2022) and the Third, 	the user’s age.
+3.	Add an Input Dialog activity to the sequence.
+4.	In the Properties window, type an appropriate title and label.
+5.	In the Result field, add the BirthYear variable.
+6.	Add an Assign activity under the Input Dialog.
+7.	In the Properties panel, in the To field, add the Age variable.
+8.	In the Value field, type CurrentYear – BirthYear. This assigns the value of the subtraction (2022 default value minus the user’s birth year) to the Age variable.
+9.	Add a Message Box activity under the Assign one.
+10.	In the Properties panel, in the Text field, type "Congratulations! You are " + Age.ToString + ".".
+	The .ToString method converts the integer stored in the Age variable to a string and displays it as such. 
+	The final project should look as in the following screenshot.
+11. Press F5. The automation is executed. Note that the Message Box displays your age, as expected.
+
+	Date and Time Variables is a type of variable that enables you to store information about any date and time. This type of variable can be found in the Browse and Select a .Net Type window, under the System namespace System.DateTime.
+Steps:
+1.	Create a new sequence.
+2.	Create two DateTime variables, Today and LastTime.
+3.	Create a TimeSpan variable, called Span, and in the Default field type 1.02:10:04.
+4.	Add an Assign activity to the Designer panel.
+5.	In the Properties panel, in the To field, add the Today variable.
+6.	In the Value field, type Now. This gives you the date and time when the project is executed, in the dd/MM/yyyy and hh:mm:ss formats.
+7.	Add another Assign activity under the previous one.
+8.	In the Properties panel, in the To field, add the LastTime variable.
+9.	In the Value field, type Today.Subtract(Span). This is going to subtract the default value of the Span variable from the current date and time, stored in the Today variable.
+10.	Add an Use Excel File activity under the last Assign one.
+	Use the Manage Packages feature to download the Excel activities, if you do not already have them installed. 
+11.	In the Properties panel, in the WorkbookPath field, type the path of the Excel file you want to write to, between quotation marks. In our case, "%HOMEPATH%\Desktop	\urgent_invoice.xlsx" it may be other for students.
+	If the file does not exist at the provided path, it is going to be created. 
+12.	Add a Write Cell activity in Do section the Use Excel File activity.
+13.	InWrite Cell in What to Write Section type LastTime.ToString. This transforms the value of the LastTime variable to a string and writes it to the coordinates previously given.
+14.	In the Where to Write Section type Excel.Sheet("Sheet1").Cell("A1") , it will direct write cell activity to write at Cell A1 in our provided excel sheet
+15.	Check Auto Increment if needed for other execution.
 Output:
- 
- 
-  
-P2B For a given set of training data examples stored in a .CSV file, implement and demonstrate Candidate-Elimination algorithm to output a description of the set of all hypotheses consistent with the training examples.
-#Code:	import numpy as np
-import pandas as pd
-data = pd.DataFrame(data=pd.read_csv('2BFile.csv'))
-print(data)
-concepts = np.array(data.iloc[:,0:-1])
-print("Independent Entities")
-print(concepts)
-target = np.array(data.iloc[:,-1])
-print("Dependent Entity")
-print(target)
-def learn(concepts, target):
-    specific_h = concepts[0].copy()
-    print("initialization of specific_h and general_h")
-    print(specific_h)
-    general_h = [["?" for i in range(len(specific_h))]
-                 for i in range(len(specific_h))]
-    print(general_h)
-    for i, h in enumerate(concepts):
-        if target[i] == "yes":
-            for x in range(len(specific_h)):
-                if h[x]!= specific_h[x]:
-                    specific_h[x] ='?'
-                    general_h[x][x]='?'
-                print(specific_h)
-            print(specific_h)
-        if target[i] == "no":
-            for x in range(len(specific_h)):
-                 if h[x]!= specific_h[x]:
-                     general_h[x][x]=specific_h[x]
-                 else:
-                     general_h[x][x]='?'
-        print(" steps of Candidate Elimination Algorithm",i+1)
-        print(specific_h)
-        print(general_h)
-    indices=[i for i,val in enumerate(general_h) if val ==['?','?','?','?','?','?']]
-    for i in indices:
-        general_h.remove(['?','?','?','?','?','?'])
-        return specific_h,general_h
-s_final, g_final = learn(concepts, target)
-print("Final Specific_h:", s_final, sep="\n")
-print("Final General_h:", g_final, sep="\n")
+
+	Boolean variable
+	Theory: Boolean variable also known as true or false variables, it is used for decision making, in this practical we are going to create an automation that asks the user for his 	name and gender, and displays the results in another window.
+Steps:
+1.	Create a new process and add a Flowchart.
+2.	Create two string variables, Name and Gender. The first is going to be used to store the name of the user, and the second to store the user’s gender.
+3.	Create a boolean variable, Male. This variable is going to be used to verify if the user is a male.
+4.	Add an Input Dialog activity to the Designer panel and connect it to the Start node.
+5.	In the Properties panel, in the Label field type "What is your name?".
+6.	Add a title and, in the Result field, add the Name variable.
+7.	Add another Input Dialog activity and connect it to the previous one.
+8.	In the Properties panel, in the Label field, type "What is your gender?".
+9.	Add a title and, in the Result field, add the Gender variable.
+10.	Add a Flow Decision activity to the Designer panel, and connect it to the second Input Dialog.
+11.	In the Properties panel, in the Condition field, type Gender = "Male" or Gender = "male". This activity checks if the user is a male or female.
+12.	Add two Assign activities.
+13.	Connect one to the True branch of the Flow Decision activity.
+14.	In the Properties panel, in the To field enter the Male variable.
+15.	In the Value field, type True. This assigns the True value to the Male variable when the Gender = "Male" or Gender = "male" condition is met.
+16.	Connect the second Assign activity to the False branch of the Flow Decision.
+17.	In the Properties panel, in the To field, enter the Male variable.
+18.	In the Value field, type False. This assigns the False value to the Male variable when the Gender = "Male" or Gender = "male" condition is not met.
+19.	Add a new Flow Decision and connect the previously added Assign activities to it.
+20.	In the Properties panel, in the Condition field, type Male = True.
+21.	Add a Message Box activity and connect it to the True branch of the Flow Decision.
+22.	In the Properties panel, in the Text field, type Name + " is a " + Gender + ".". This message displays the name of the user and its gender, if Male is true.
+23.	Add another Message Box activity and connect it to the False branch of the Flow Decision.
+24.	In the Properties panel, in the Text field, type Name + " is a " + Gender + ".". This message displays the name of the user and its gender, if Male is false. The final project 
+25.	Press F5. The automation is executed. Note that the final Message Box displays the message as expected.
+
+	Generic Value variable 
+Theory: To demonstrate how a Generic Value variable works, let us create an automation that performs different operations whose results depend on the way we define their expressions. We create two Generic Value variables of different data types and display the results in the Output panel.
+Steps:
+1.	Create a new blank project.
+2.	Create three Generic Value variables: Int, Str, and Result.
+3.	In the Default column for the Int variable, type 12, and for the Str variable, type "34". The first variable is interpreted as an integer, while the second one is interpreted as a 	string.
+4.	Add an Assign activity to the Designer panel and connect it to the Start node.
+5.	In the Properties panel, in the To field, enter the Result variable.
+6.	In the Value field, type Int + Str.
+7.	Add a Write Line activity and connect it to the Assign one.
+8.	In the Properties panel, in the Text field, enter the Result variable.
+	The project should look as in the following screenshot.
+9.	Press F5 to execute your automation. Note that, in the Output panel, the sum of the two numbers is displayed.
+10.	Go back to the previously added Assign activity and change the Value field to Str + Int, to reverse the order of the variables. The project should look as in the following 	screenshot.
+11.	Press F5 to execute your automation. Note that, in the Output panel, the concatenation of the two numbers is displayed.
+This means that UiPath Studio takes the first element defined in your expression as a guideline for what operation to perform. If the first element in your expression is an integer or a GenericValue variable filled in as integer, UiPath Studio will perform the sum of the elements.
+If the first element in your expression is a string or a GenericValue variable filled in as string, UiPath Studio will perform the concatenation of the elements.
+	Array Variables 
+Theory: In this practical of array variables, we are going to create an automation that asks the user for his first and last name and age, stores the information in an array and then writes it in a .txt file.
+Steps:
+1.	Create a new sequence.
+2.	Create three string variables, FirstName, LastName and Age, in which to store the information gathered from the user.
+3.	Create an array of strings variable called NameAge.
+4.	Add an Input Dialog activity to the Designer panel.
+5.	In the Properties panel, fill in the Label and Title fields to ask for the user’s first name.
+6.	In the Result field, type the FirstName variable. This variable stores the first name of the user.
+7.	Add another Input Dialog activity under the previous one.
+8.	In the Properties panel, fill in the Label and Title fields to ask for the user’s last name.
+9.	In the Result field, type the LastName variable. This variable is going to store the last name of the user.
+10.	Add another Input Dialog activity under the previous one.
+11.	In the Properties panel, fill in the Label and Title fields to ask for the user’s age.
+12.	In the Result field, type the Age variable. This variable is going to store the age of the user.
+	Note:We use a string variable and not an integer to store the age, so that we do not have to convert it later on, when we add it to the string array variable.
+13.	Add an Assign activity under the last Input Dialog.
+14.	In the Properties panel, in the To field, type the NameAge variable.
+15.	In the Value field, type {FirstName,LastName,Age}. This Assign activity enables you to store all the values from the initial string variables in the NameAge one.
+16.	Add a Write Text File activity under the Assign one.
+17.	In the Properties panel, in the FileName field, type the path of the file you want to write to between quotation marks, such as "%HOMEPATH%\Desktop\array_variable.txt".
+	Note: If the file does not exist at the provided path, it is created.
+18.	In the Text field, type NameAge(0) + " " + NameAge(1) + " " +NameAge(2) + " ".
+	Note: By adding the index number of the array items you can access their values and write them, in this example, to a text file.
+19.	Press Ctrl + F5 to run the project.
+20.	Navigate to the file provided at step 17 and double-click it. A Notepad window is displayed with the information you added at step 20.
+
+	DataTable variables
+Theory: In this practical we are going to create an automation that reads only two out of multiple columns from an Excel spreadsheet, and then transfers them to another spreadsheet that already contains other information.
+The initial file is a database of people, transactions, dates, and products. In this example, we are going to extract their names and order dates and append them to an Excel spreadsheet that already contains similar information.
+Steps:
+1.	Create a new sequence.
+2.	Add an Excel Application Scope activity to the sequence. This activity is required for most of the Excel-related activities.
+	Note: If you do not have Excel activities installed on your version of UiPath, use the Manage Packages functionality to get them.
+3.	Create two DataTable variables, NamesList and DateInfo. These are going to be used to store information from the initial Excel spreadsheet.
+4.	In the Properties panel, in the WorkbookPath field, type the path of the initial Excel file to be used, between quotation marks.
+5.	Add two Read Range activities and place them one under the other, in the Excel Application Scope activity. These are used to get information from the initial spreadsheet.
+6.	Select the first Read Range activity and, in the Properties panel, in the Range field, type "G7:G37". These are the Excel table coordinates that tell UiPath Studio from where to 	extract information.
+7.	In the SheetName field, do not make any changes as the name of our sheet is the default one, Orders.
+8.	In the DataTable field, type the name of the first DataTable variable, NamesList. This variable stores all the information available between the G7 and G37 rows.
+9.	(Optional) Change the value in DisplayName field to Read Names, so you can easily tell apart this activity from the second one.
+10.	Select the second Read Range activity, and in the Properties panel, in the Range field, type "C7:C37". These are the Excel table coordinates that contain the order date we want to 	extract.
+11.	In the DataTable field, specify the DateInfo variable. This variable retains all the date information we require.
+12.	In the Activities panel, under System > File > Workbook, add a Write Range activity to the Designer panel, under the Excel Application Scope. This activity is used to write the 	stored information to another Excel file.
+	Note: The file used with the Write Range activity has to be closed when you run the project. If it is not closed, an error is displayed and the automation execution stops.
+13.	In the Properties panel, in the WorkbookPath field, type the path of the Excel file to be used to store all the information gathered at the previous steps.
+14.	In the DataTable field, type the NamesList variable.
+15.	In the SheetName field type Database, and in the StartingCell, type "B7.“ This is the starting cell in which information from the initial file is to be added.
+16.	Add another Write Range activity and place it under the first one.
+17.	In the Properties panel, fill in the WorkbookPath and SheetName fields as for the previous Write Range activity.
+18.	In the Starting Cell field, type "A7".
+19.	In the DataTable field, type the DateInfo variable.
+20.	Press F5. Your automation is executed.
+21.	Double-click the final Excel file. Note that the copied information is available, and correctly updated.
+
+
+
+Practical No: 2
+Decision making and looping
+a)	Consider an array of names. We have to find out how many of them start with the letter "a". Create an automation where the number of names starting with "a" is. counted and the 	result is displayed. 
+1.	Drag and drop Flowchart activity from the Activities panel. Drag and drop a Sequence activity inside Flowchart. Connect the Sequence to the Start node by right-clicking on the 	Sequence activity & selecting the Set Start node option.
+2.	click on the Sequence activity. Create a variable. Give it a name (here, we will create an array of type string and name it as names). Set the variable type to Array of [T]. after 	that select String. also, initialize the array in the Default section of the variable by giving it a default values. For example, {“vikas”, “akash”, “anil”, “sakshi”, “ankit”, 	“ankit”}
+3.	Create a variable of type integer Count for storing the result. Set the variable type to Int32.
+4.	Drag and drop a For each activity inside the Sequence. Also, specify the array name in the expression box of the For each activity. The For each activity is used to iterate over 	the array. It will pick up one name from the array each time until it reaches the end:
+5.	Drag and drop the If activity from the Activities panel and place it inside the For each activity at the location where Drop activity here is mentioned. Specify the condition in 	the expression box of the If activity. 
+6.	We have specified the expression as currentItem.ToString.StartsWith (“a”). This expression specifies the name present in the item variable starts with the letter “a”. The For each 	activity iterates over the array, picks up one name at a time, and stores it as a variable, currentItem:
+7.	Now, we are going to use the Count variable and increment it each time a name from an array starts with the letter a. For this, we will use A+B Assign activity. insert the A+B 	Assign activity inside the If activity. Set the To property to Count (variable name) and the Value property to Count + 1(to increment its value) of the A+B Assign activity.
+8.	Just drag and drop a Message box activity inside the Sequence activity. Specify the count variable in the expression box of the Message box activity. But remember, the variable 	that we have created is of type Int32, so, it cannot be used with the Message box activity without converting it to a string. To convert it to a string, use ‘.ToString’:
+9.	Hit the Run button or press F5 and see the result.
+
+b)	Demonstrate switch statement with an example. 
+	Theory: The Switch activity enables you to select one choice out of multiple, based on the value of a specified 
+expression. By default, the Switch activity uses the integer argument, but you can change it from the Properties panel, from the TypeArgument list. The Switch activity can be useful to categorize data according to a custom number of cases. For example, you can use it to store data into multiple spreadsheets or sort through names of employees. 
+Steps: we are going to create an automation that asks the user for a number, checks if is odd or even, and depending 
+on that, a different message is written to the Output panel. Since all odd numbers divided by two have a remainder equal to 1, this project needs only two cases (0 and 1), yet keep in mind that this activity supports multiple cases. 
+1.	Create a new sequence. 
+2.	Create an integer variable, Number. 
+3.	Add an Input Dialog activity to the Designer panel. 
+4.	Add a Title and Label to prompt the user for a number. 
+5.	In the Result field, add the Number variable. 
+6.	Add a Switch activity, under the Input Dialog. 
+7.	In the Expression field, type Number mod 2. This verifies if the user’s number is divisible by 2. 
+8.	In the Default section, add a Write Line activity. 
+9.	In the Text field, type Number.ToString + " is an even number.". 
+10.	Click the Add new case line, and in the Case Value field, type 1. 
+11.	Add a Write Line activity to this case. 
+12.	In the Text activity, type Number.ToString + " is an odd number.". The final project should look as in the following screenshot. 
+13.	Press F5. The automation is executed. Note that the Output panel displays the data correctly.
+
+c)	Create an automation To Print numbers from 1 to 10 with break after write line activity inside for each activity.
+Steps:1. Open UiPath and create a new Blank Process, Drag and drop For Each activity onto the Designer panel.
+3. In the Properties panel of the For Each activity, set the TypeArgument to Int32.
+4. Create a variable called "numbers" of type Int32[] and assign it the value Enumerable.Range(1, 10).ToArray(). This will generate an array of numbers from 1 to 10.
+5. Connect the "numbers" variable to the For Each activity's Values property.
+6. Inside the For Each activity, drag and drop a WriteLine activity.
+7. In the Properties panel of the WriteLine activity, set the Text property to currentitem.ToString(). This will print the current number in the Output panel.
+8. After write line activity add For Each activity and in that add write line activity
+8. Drag and drop a Break activity below the 2nd WriteLine activity. This will exit the loop after the WriteLine activity is executed.
+9. Save your workflow and run the automation.
+
+d)	Create an automation using Do..While Activity to print numbers from 5 to 1 
+Steps:
+1.	Open UiPath Studio and create a new Blank ProcessDrag and drop a Do..While activity onto the Designer panel.
+2.	Create a variable called "counter" of type Int32 and assign it the value 5. This will be the starting number.
+3.	In the Condition property of the Do..While activity, enter the condition "counter >= 1". This will ensure that the loop continues until the counter reaches 1.
+4.	Inside the Do..While activity, drag and drop a WriteLine activity.
+5.	In the Properties panel of the WriteLine activity, set the Text property to "Current number: " + counter.ToString(). This will print the current number in the Output panel.
+6.	Drag and drop an Assign activity below the WriteLine activity.
+7.	Inside the Assign activity, assign the value "counter - 1" to the "counter" variable. This will decrement the counter by 1 in each iteration. Save your workflow and run the 	automation.
+
+e)	Create an automation using Delay Activity between two writeline activities to separate their execution by 20 seconds 
+Steps: let's create an automation that writes two messages to the Output panel, with a delay of 20 seconds between them. 
+1.	Create a new flowchart. Add a Write Line activity and connect it to the Start node. 
+2.	Select the activity, and in the Text field, type "This is the start time." 
+3.	Add a Delay activity and connect it to the previously added activity. 
+4.	Select the activity, and in the Properties panel, in the Duration field, type 00:00:20. This is the 20 seconds delay that is going to be between the two logged messages. 
+5.	Add another Write Line and connect it to delay activity. In Text field, type "Message delayed by 20 seconds.". 
+6.	Press F5. The automation is executed. Note that, in the Output panel, the two messages added in the Write Line activities are written twenty seconds apart.
+
+f)	Create an automation to demonstrate use of decision statements (if)
+Theory: The If activity contains a statement and two conditions. The first condition (the activity in the Then section) is executed if the statement is true, while the second one (the activity in the optional Else section) is executed if the statement is false. If activities can be useful to make decisions based on the value of variables. 
+Note: The If activity is almost identical to the Flow Decision one. However, the latter can only be used in flowcharts. 
+Steps: let’s create an automation that asks the user for two numbers, checks to see if one is divisible by the other, and depending on the result, displays a different message in the Output panel. 
+1.	Create a new sequence. 
+2.	Create two integer variables, FirstNumber and SecondNumber for example. 
+3.	Add two Input Dialog activities to the Designer panel. 
+4.	In the Properties panel, type labels and titles for both activities and, in the Result fields, add the FirstNumber and SecondNumber variables. 
+5.	Add an If activity to the Designer panel, under the previously added Input Dialog ones. 
+6.	In the Condition section, type FirstNumber mod SecondNumber = 0. This expression checks if the first number is divisible to the second one, using the mod operator. 
+7.	In the Then section, add a Write Line activity. 
+8.	In the Text field, type FirstNumber.ToString + " is divisible by "+ SecondNumber.ToString + ".". This is the message that is displayed if the first number is divisible by the 	second one. 
+9.	Click Show Else to display the Else section, and then add another Write Line activity in the Else section. 
+10.	In the Text field, type FirstNumber.ToString + " is NOT divisible by "+ SecondNumber.ToString + ".". This is the message that is displayed if the first number is not divisible with 	the second one. 
+11. Press F5. The automation is executed. 
+12. Add numbers when prompted. Note that the Output panel displays the result, depending on the values added in the Input Dialog windows.
+
+
+Practical No: 3
+Types of Recording
+a)	Basic Recording using Toolbar 
+Steps:
+1.	Open blank word file where we’ll be performing automation 
+2.	Open UiPath Studio and create a new project.
+3.	Click on the "Recording" tab in the toolbar at the top of the screen.
+4.	Click on the "Basic Recording" button to start the recording process.
+5.	A recording toolbar will appear on the screen with various options.
+6.	Use the "Click" button to record mouse clicks on specific elements or areas of the screen.
+7.	Use the "Type Into" button to record keyboard inputs.
+8.	Use the "Select" button to record the selection of elements on the screen.
+9.	Use the "Delay" button to add pauses between actions if needed.
+10.	Use the "Highlight" button to highlight elements during the recording process.
+11.	Use the "Stop" button to stop the recording when you have finished recording your desired actions.
+12.	Once the recording is stopped, UiPath Studio will generate a sequence of activities based on your recorded actions.
+13.	You can then modify and enhance the generated sequence as needed to customize your automation.
+14.	Test your automation by running the workflow and see if it performs the recorded actions correctly.
+
+b)	Basic Recording using Notepad 
+Steps:
+1.	Open Notepad where we’ll be performing automation 
+2.	Open UiPath Studio and create a new project.
+3.	Drag and drop the "Open Application" activity from the activities panel onto your workflow.
+4.	In the properties of the "Open Application" activity, specify the file path of Notepad or use the "Indicate window on screen" option to select the Notepad application.
+5.	Drag and drop the "Click" activity from the activities panel.
+6.	Configure the properties of the "Click" activity to click on the Notepad window to ensure it is in focus.
+7.	Drag and drop the "Type Into" activity from the activities panel.
+8.	Configure the properties of the "Type Into" activity to enter the text you want to record into Notepad.
+9.	Drag and drop the "Click" activity again to click on the Notepad window to ensure it is in focus.
+10.	Drag and drop the "Type Into" activity again to enter more text if needed.
+11.	Repeat steps 8 and 9 as necessary to record additional actions in Notepad.
+12.	Use the "Delay" activity to add pauses between actions if needed.
+13.	Use the "Click" activity to record any clicks on buttons or menu options in Notepad.
+14.	Use the "Type Into" activity to record any keyboard inputs in Notepad.
+15.	Once you have finished recording your desired actions in Notepad, stop the recording process.
+16.	UiPath Studio will generate a sequence of activities based on your recorded actions.
+17.	You can then modify and enhance the generated sequence as needed to customize your automation.
+18.	Test your automation by running the workflow and see if it performs the recorded actions correctly in Notepad.
 Output:
+
+c)	Desktop Recording using Tool bar 
+Steps:
+1.	Open word file where we’ll be performing the automation.
+2.	Now Open UiPath Studio and create a new project.
+3.	Drag and drop the "Desktop Recording" activity from the activities panel onto your workflow.
+4.	In the properties of the "Desktop Recording" activity, you can customize the recording settings such as the output file path, recording mode, and screen region to be captured.
+5.	Click on the "Start Recording" button in the toolbar to begin the desktop recording.
+6.	Perform the actions you want to record on your desktop, such as opening applications, clicking buttons, or typing in text boxes.
+7.	Use the toolbar options to pause, resume, or stop the recording as needed.
+8.	Once you have finished recording, click on the "Stop Recording" button in the toolbar.
+9.	UiPath Studio will generate a sequence of activities based on your recorded actions.
+10.	You can then modify and enhance the generated sequence as needed to customize your automation.
+11.	Test your automation by running the workflow and see if it performs the recorded actions correctly on your desktop.
  
+Output:
+
+d)	Desktop Recording by creating a workflow 
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop the "Open Application" activity from the activities panel onto your workflow. This activity allows you to open the application you want to record.
+3.	Configure the "Open Application" activity by specifying the path of the application executable file.
+4.	Drag and drop the "Click" activity from the activities panel onto your workflow. This activity allows you to simulate a mouse click on the application.
+5.	Configure the "Click" activity by indicating the element you want to click on within the application.
+6.	Repeat steps 4 and 5 for any other actions you want to record, such as typing in text boxes or selecting options from dropdown menus.
+7.	Drag and drop the "Delay" activity from the activities panel onto your workflow. This activity allows you to add pauses between actions.
+8.	Configure the "Delay" activity by specifying the duration of the pause in milliseconds.
+9.	Continue adding activities to your workflow to capture all the actions you want to record.
+10.	Once you have finished creating the workflow, save it.
+11.	To run the workflow and record the desktop actions, click on the "Run" button in the toolbar.
+12.	UiPath Studio will execute the activities in the workflow and record the desktop actions based on your instructions.
+13.	After the recording is complete, you can view and modify the recorded activities in the workflow.
+14.	Test your automation by running the modified workflow and see if it performs the recorded actions correctly on your desktop.
+
+Output:
+	
+e)	Web Recording e.g. Find the rating of the movie from imdb web site 
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop the "Open Browser" activity from the activities panel onto your workflow. This activity allows you to open a web browser.
+3.	Configure the "Open Browser" activity by specifying the URL of the IMDb website.
+4.	Drag and drop the "Type Into" activity from the activities panel onto your workflow. This activity allows you to enter text into a text box.
+5.	Configure the "Type Into" activity by indicating the search bar on the IMDb website and enter the name of the movie you want to search for.
+6.	Drag and drop the "Click" activity from the activities panel onto your workflow. This activity allows you to simulate a mouse click on an element.
+7.	Configure the "Click" activity by indicating the search button on the IMDb website to perform the search.
+8.	Drag and drop the "Get Text" activity from the activities panel onto your workflow. This activity allows you to extract text from a web element.
+9.	Configure the "Get Text" activity by indicating the element on the IMDb website that displays the movie rating.
+10.	Create a variable to store the extracted movie rating.
+11.	Connect the activities in the workflow to perform the desired actions in the correct order.
+12.	Once you have finished creating the workflow, save it.
+13.	To run the workflow and find the rating of the movie, click on the "Run" button in the toolbar.
+14.	UiPath Studio will execute the activities in the workflow and extract the movie rating from the IMDb website.
+15.	Display or use the extracted movie rating as needed in your automation project.
+
+f)	Web Recording manually 
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop the "Open Browser" activity from the activities panel onto your workflow. This activity allows you to open a web browser.
+3.	Configure the "Open Browser" activity by specifying the URL of the website you want to record.
+4.	Drag and drop the "Attach Browser" activity from the activities panel onto your workflow. This activity allows you to attach to an already opened browser.
+5.	Configure the "Attach Browser" activity by indicating the browser you want to attach to.
+6.	Once the browser is attached, you can start recording your actions. Click on the "Record" button in the UiPath toolbar.
+7.	A recording toolbar will appear. You can now interact with the web page as you normally would.
+8.	Perform the actions you want to record, such as clicking on buttons, filling out forms, or navigating through pages.
+9.	As you perform your actions, UiPath Studio will automatically generate activities in the workflow based on your interactions.
+10.	Once you have finished recording your actions, click on the "Stop" button in the recording toolbar.
+11.	UiPath Studio will generate a sequence of activities based on your recorded actions.
+12.	Review the generated activities and make any necessary modifications or additions to the workflow.
+13.	Save the workflow and run it to test the recorded actions.
+
+
+
+Practical No: 4
+Excel Automation
+a)	Automate the process to extract data from excel file into a data table and vice versa 
+Theory: Create an automation project that extracts some specific information from Wikipedia and writes it to an Excel spreadsheet. You can use this type of automation in different scenarios, such as extracting lists of products and their prices from e-commerce websites. 
+Note: It is recommended to run your web automations on Internet Explorer 11 and above, Mozilla Firefox 50 or above, or the latest version of Google Chrome. 
+Let’s say you want to start reading up on economics and you want to get a list of Wikipedia articles on the subject, together with their URLs, and the additional information that is provided in the search results for each article. You can do the following: 
+1. Open Internet Explorer and navigate to en.wikipedia.org. 
+2. In the Search Wikipedia box, type "economics", then click "containing... economics" in the drop-down that appears. A web page opens displaying the search results. 
+3. In Studio, create a New Blank Process. 
+4. From the Activities panel, add an Open Browser activity to the Designer panel and, in the Url field, paste the URL of the web page with the search results. In our example, the URL is: "https://en.wikipedia.org/w/index.php?search=economics%20&title=Special%3AS earch&fulltext=1&ns0=1". 
+5. In the Design ribbon tab, in the Wizards group, click Data Scraping. The Extract Wizard is displayed. 
+6. Following the wizard, select the first and last items on the web page. The Configure Columns wizard step is displayed and the fields you selected are highlighted in the web browser. 
+7. Select the Extract URL check box and change the name of the column headers to something relevant, for example "Article Title" and "URL". 
+8. Click Next. A preview of the data is displayed in the Preview Data wizard step. Note that because the Wikipedia page uses relative URLs, the URL column contains relative URLs as well. You can correct this in the Excel output after the project is executed by adding the string "https://en.wikipedia.org" at the beginning of each cell in the URL column. 
+9. Click the Extract Correlated Data button to extract additional information about the articles. The Extract Wizard starts again. 
+10. Following the wizard again, indicate the information about the size and date of the last edit that is available for each article. The Configure Columns step is reached again. 
+11. Change the name of the new column header to "Additional Information" and click Next. The data is displayed in the Preview Data wizard step. Optionally, you can change the order of the columns by dragging them in place. 
+12. In the Maximum number of results type 60. The Wikipedia search lists 20 results per page and, for our example, we want to extract the first three pages of search results. 
+13. Click Finish. The Indicate Next Link window is displayed prompting you to indicate the Next button or arrow to click if the data spans more than one page. 
+14. Click Yes and select the next 20 button below the search results in Wikipedia. The project is updated and a Data Scraping sequence is displayed in the Designer panel. A DataTable variable, ExtractDataTable has been automatically generated. 
+15. In the Variables panel, change the scope of the automatically generated ExtractDataTable variable to Sequence. Do this to make the variable available outside of its current scope, the Data Scraping sequence. 
+16. Add an Excel Application Scope activity under the Data Scraping sequence. 
+17. In the Properties panel of the Excel Application Scope activity, in the WorkbookPath field, type "web_scraping.xlsx". Upon project execution, a file with this name is created in the project folder to store data from the scraping. Alternatively, you can specify a file that already exists on your machine. 
+18. In the Do sequence of the Excel Application Scope activity, add a Write Range activity and in the Properties panel: 
+• In the DataTable field, add the ExtractDataTable variable. 
+• Select the AddHeaders check box to include the column names in the output. 
+The final project should look as in the following screenshot: 
+19. Press F5 to execute the project. 
+20. Open the Excel file you defined in step 17. Note that all columns are populated correctly.
+
+b)	Create an automation To Write data to specific cell of an excel sheet. 
+Steps: 1. Open UiPath Studio and create a new project.
+2. Drag and drop the "Use Excel File" activity from the activities panel onto your workflow.
+3. In the properties of the "Use Excel File" activity, locate file path of Excel sheet you want to work with.
+4. Drag and drop the "Write Cell" activity from the activities panel inside the "Use Excel File" activity.
+5. Configure the properties of the "Write Cell" activity. Specify the sheet name, cell location 
+    ExcelSheet(“sheet1”).Cell(“B4”) and the value you want to write to that cell.
+6. Test automation by running it and see if the data is successfully written to the specified cell in the Excel sheet.
+
+
+c)	Create an automation To Read data to specific cell of an excel sheet. 
+Theory: By following these steps, you'll be able to create an automation that reads data from a specific cell in an Excel sheet using UiPath. 
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop the "Use Excel File" activity from the activities panel onto your workflow.
+3.	In the properties of the "Use Excel File" activity, specify the file path of the Excel sheet you want to work with.
+4.	Drag and drop the "Read Cell" activity from the activities panel inside the "Use Excel file" activity.
+5.	Configure the properties of the "Read Cell" activity. Specify the sheet name and the cell location ExcelSheet(“sheet1”).Cell(“B4”) ,from which you want to read the data.
+6.	Creat a variable read of type string to store the output of the "Read Cell" activity.
+7.	Drag and drop Message Box activity after read cell activity in text field of message box type read.ToString to store string data.
+8.	Test your automation by running the workflow and see if the data from the specified cell is successfully read.
+
  
+d)	Create an automation to append data to specific cell of an excel sheet. 
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop the " Use Excel File " activity from the activities panel onto your workflow.
+3.	In the properties of the "Use Excel File" activity, specify the file path of the Excel sheet you want to work with.
+4.	Drag and drop the "write cell" activity from the activities panel inside do field of "Use Excel File" activity.
+5.	Configure the properties of the "Write Cell" activity. Specify the sheet name, cell location ExcelSheet(“sheet1”).Cell(“B3”) and the value you want to write to that cell.in my case 	“Febraury” This will change data of B3 that is 2 to February.
+6.	Test your automation by running the workflow and see if the data is successfully appended to the specified cell in the Excel sheet.
+
+
+e)	Create an automation to sort a table of an excel sheet. 
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Click on new and select flowchart on canvas drag and drop "Excel Application Scope" activity from the activities panel onto your workflow.
+3.	After clicking Double-click to view, In the properties of the "Excel Application Scope" activity, specify the file path of the Excel sheet you want to work with.
+4.	In do field add short table activity and inside it add specific data in field such as “Sheet1” , “Table1” , “CountryName”.
+5.	Click on Debug to run the automation.
+
+f)	Create an automation To filter a table of an excel sheet
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Click on new and select flowchart on canvas drag and drop "Excel Application Scope" activity from the activities panel onto your workflow.
+3.	After clicking Double-click to view, In the properties of the "Excel Application Scope" activity, specify the file path of the Excel sheet you want to work with.
+4.	In do field add “filter table” activity and inside it add specific data in field such as “Sheet1”, “Table1”, “Country”. In the properties field of filter table add which data you 	want to filter in my case I have selected{“india”}.
+5.	Test your automation by running the workflow and see if the table in the Excel sheet is successfully filtered.
+
+
  
-P3A Write a program to implement the naïve Bayesian classifier for a sample training data set stored as a .CSV file. Compute the accuracy of the classifier, considering few test data sets.
-#Code:	import pandas as pd
-from sklearn import tree
-from sklearn.preprocessing import LabelEncoder
-from sklearn.naive_bayes import GaussianNB
-data = pd.read_csv('tennisdata.csv')
-print("The first 5 values of data is :\n",data.head())
-X = data.iloc[:,:-1]
-print("\nThe First 5 values of train data is\n",X.head())
-y = data.iloc[:,-1]
-print("\nThe First 5 values of train output is\n",y.head())
-le_outlook = LabelEncoder()
-X.Outlook = le_outlook.fit_transform(X.Outlook)
-le_Temperature = LabelEncoder()
-X.Temperature = le_Temperature.fit_transform(X.Temperature)
-le_Humidity = LabelEncoder()
-X.Humidity = le_Humidity.fit_transform(X.Humidity)
-le_Windy = LabelEncoder()
-X.Windy = le_Windy.fit_transform(X.Windy)
-print("\nNow the Train data is :\n",X.head())
-le_PlayTennis = LabelEncoder()
-y = le_PlayTennis.fit_transform(y)
-print("\nNow the Train output is\n",y)
-from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.20)
-classifier = GaussianNB()
-classifier.fit(X_train,y_train)
-from sklearn.metrics import accuracy_score
-print("Accuracy is:",accuracy_score(classifier.predict(X_test),y_test))
+Practical No: 5
+Different controls in UiPath
+a)	Implement the attach window activity. 
+Theory: The Attach Window activity can be found in the Activities panel. This activity is generally used to attach an already opened window. It is also auto-generated when we record actions using the Basic or Desktop recorder. You will get a much clearer idea after going through the example in the following section. 
+Steps:  In this practical, we shall use the Attach Window activity manually. Here, we are going to attach a Notepad window and then write some text into it: 
+1.	Create a blank project and give it a meaningful name. 
+2.	Drag and drop a Flowchart activity on the Designer panel. Also, drag and drop a Click activity inside the Designer panel. Set this Click activity as the Start node. 
+3.	Double-click on the Click activity and then click on Indicate on screen. Locate the Notepad icon. 
+4.	Drag and drop the Attach Window activity on the main Designer panel. Connect the Attach Window activity to the Click activity. 
+5.	Double-click on the Attach Window activity. Click on Click Window on Screen and indicate the Notepad window. The Notepad window is now attached to the previous activity:
+6.	For the sake of completeness, we are going to add a Type into activity. Just drag and drop the Type into activity, inside the Attach Window activity. Click on the Indicate element 	inside window and locate the Notepad window where you want to write the text. Write the text in the Text property of the Type into the activity. 
+7.	Hit the run button.
+
+b)	Automate using Anchor Base. 
+Theory: The "Anchor Base" activity is useful when you want to perform actions relative to a specific element on the screen. It helps ensure that your automation remains robust even if the position or layout of other elements changes.
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop the "Anchor Base" activity from the activities panel onto your workflow.
+3.	Indicate the anchor element on the screen by selecting it using the UI Explorer or the "Indicate Anchor" button. This anchor element will serve as a reference point for the 	activities you want to perform.
+4.	Inside the "Anchor Base" activity, add the activities you want to perform relative to the anchor element. For example, you can add a "Click" activity to click on a button near the 	anchor element.
+5.	Configure the activities within the "Anchor Base" based on your automation requirements. For the "Click" activity, you can indicate the element to click by selecting it using the 	UI Explorer or the "Indicate Element" button.
+6.	Continue adding more activities within the "Anchor Base" as needed, such as typing into text fields or extracting data from nearby elements.
+7.	Test your automation by running the workflow and see if the activities are performed correctly relative to the anchor element.
+ 
+c)	Automate using Element Exists. 
+Theory: The "Element Exists" activity is useful when you want to check whether a specific element exists on the screen before performing certain actions. It helps you make your automation more robust by allowing you to handle different scenarios based on the existence or non-existence of the element.
+Steps:
+1.	Open UiPath Studio and create a new project called flowchart. drag and drop “open browser” activity and link to start node. Click on double click to view then in url field inside 	open browser activity type www.google.com 
+2.	Now open chrome browser and run www.google.com let it run in background now maximize uipath 
+3.	Drag and drop the "Element Exists" activity from the activities panel onto your workflow below open browser activity. Click on “double click to view” of element exist activity next 	click on indicate on screen it will redirect to browser you were running in background click on google logo “this means if google logo element exist then do further activity”. In 	the property panel of element exist there’s a field called Exist there press “ctrl + k” to create variable name “found” of type “Boolean”.
+4.	Configure the properties of the "Element Exists" activity. You can specify a timeout period, which determines how long UiPath will wait for the element to appear before considering 	it non-existent.
+5.	Based on the outcome of the "Element Exists" activity, add flow decision activity to perform different actions depending on whether the element exists or not.
+6.	 in property panel of “decision activity there’s a field called condition type found variable. 
+7.	Drag and drop type into activity and connect it to true part of flow decision, click on double click to view then click on indicate on screen that will redirect to browser press F2 	to wait for few seconds to reload the browser now click on search area and type “Mumbai University” now add “click activity” then click on “double click to view” click on “indicate 	on screen” that will redirect to browser now select the first option of your search.
+8.	Drag and drop “Message Box” activity and connect it to false part of flow decision then click on “double click to view” under text field type "Element does not Exist"
+9.	Test your automation by running the workflow and see if the "Element Exists" activity correctly identifies the presence or absence of the element.
+
+d)	Automate using Find Children control. 
+Theory: The "Find Children" activity is useful when you want to locate and interact with multiple child elements within a parent element. It allows you to perform actions on each child element individually, making your automation more flexible and efficient.
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop “open browser” Activity in property panel under input there’s a browser type field select the browser in my case it is “chrome” & in URL field type 	"https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_select”. 
+3.	Drag and drop the "Find Children" activity below open browser activity from the activities panel onto your workflow 
+4.	Indicate the parent element on the screen by selecting it using the UI Explorer or the "Indicate Element" button. This is the element that contains the child elements you want to 	find. Basically, select the dropdown box.
+5.	In property panel of find children activity under output there’s a children field press ctrl + k to create “list” variable.
+6.	Drag and drop for each activity in property panel type argument type as “UiPath.Core.UiElemennt”. now in for each activity under field “List of items” type variable “list”.
+7.	Drag and drop “Get Attribute” activity in attribute field select “aaname” & in Save to field type “EndResult” variable. In property panel of Get attribute activity under output 	there’s a Result field press ctrl + k to create “EndResult” variable.
+8.	Drag and drop “Log Message” activity in message field type EndResult variable & in LogLevel select Info.
+9.	Configure the properties of the "Find Children" activity. You can specify the scope of the search, such as searching within the parent element or the entire application window.
+10.	Add a variable of type "UiElement" to store the output of the "Find Children" activity. This variable will hold a collection of all the child elements found.
+11.	Inside a "For Each" activity, iterate through the collection of child elements. Set the TypeArgument property of the "For Each" activity to "UiElement" and assign the variable 	created in the previous step as the input.
+12.	Within the loop, you can perform actions on each child element individually. For example, you can click on a button, extract data, or perform other activities.
+13.	Test your automation by running the workflow and see if the "Find Children" activity correctly extracts the child element and display it on log message (output panel)
+
+e)	Use “Get Ancestor control” 
+Theory: The "Get Ancestor" activity is useful when you want to retrieve a specific ancestor element of a given element. It allows you to access properties and perform actions on the ancestor element, providing more flexibility in your automation.
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop “open browser” Activity in property panel under input there’s a browser type field select the browser in my case it is “chrome” & in URL field type 	"https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_select”.
+3.	Drag and drop the "Get Ancestor" activity from the activities panel onto your workflow.
+4.	Indicate the element on the screen that you want to find an ancestor for. You can use the UI Explorer or the "Indicate Element" button to select the element. basically, click on 	selection area.
+5.	In the properties panel under field Ancestor create a “ListName” variable by pressing ctrl + k.
+6.	Drag and drop “message box” activity in text field type “ListName.GetFriendlyName”.
+7.	Test your automation by running the workflow and see if the "Get Ancestor" activity correctly retrieves the desired ancestor element.
+
+f)	Use Find Relative control 
+Theory: The "Find Relative" activity is useful when you want to locate a specific relative element of a given element. It allows you to perform actions on the relative element, providing more flexibility in your automation.
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop “use application” activity from activity panel onto workflow click on indicate on screen and select application in my case I had selected word which was running in 	background.
+3.	Drag and drop find element inside field Do  then next Drag and drop the "Find Relative" activity from the activities panel into DO field.
+4.	Indicate the element on the screen that you want to find a relative for. You can use the UI Explorer or the "Indicate Element" button to select the element.
+5.	Configure the properties of the "Find Relative" activity. You can specify the relationship between the target element and the relative element you want to find, such as finding the 	sibling, parent, or child element.
+6.	Add a variable of the appropriate type to store the output of the "Find Relative" activity. For example, if you want to find the sibling element, create a variable of type 	"UiElement" to hold the sibling element.
+7.	Use the output variable in your automation to perform actions on the relative element. For example, you can click on a button within the sibling element or extract data from it.
+8.	Test your automation by running the workflow and see if the "Find Relative" activity correctly retrieves the desired relative element.
+
+
+Practical No: 6
+Keyboard and Mouse Events
+a)	Demonstrate the following activities in UiPath: 
+i.	Mouse (click, double click and hover) 
+ii.	Type into 
+iii.	Type Secure text 
+
+	Mouse (click, double click, and hover):
+•	The Mouse activities in UiPath allow you to simulate mouse actions on the screen.
+	- The "Click" activity is used to simulate a single mouse click on a specified element or position on the screen.
+	- The "Double Click" activity is used to simulate a double mouse click on a specified element or position on the screen.
+	- The "Hover" activity is used to simulate moving the mouse cursor over a specified element on the screen without clicking.
+	Type Into:
+	•	The "Type Into" activity is used to simulate keyboard input by typing text into a specified text field, such as an input box or text editor.
+	•	You can indicate the target element on the screen and then configure the activity to specify the text you want to type.
+	Type Secure Text:
+	•	The "Type Secure Text" activity is similar to the "Type Into" activity but is specifically designed for entering sensitive information, such as passwords.
+	•	It encrypts the text you specify to protect it from being visible in the workflow or logs.
+These activities are commonly used in automation to interact with applications, websites, or any user interface elements. They allow you to perform actions like clicking buttons, entering text, and handling sensitive information securely.
+i.	Mouse (click, double click and hover) 
+Steps:
+1.	Open UiPath Studio click on "New Project" to create a new automation project. Give it a name and select the location where you want to save it.
+2.	Drag and drop “Use Application” activity on workflow because click and hover activity works only if it is under use application activity so now click on indicate on screen and 	configure it by clicking on desktop.
+3.	Drag and Drop Activities under DO field of “Use Application” activity: In the UiPath Studio, you will see a list of available activities on the left-hand side. Search for "Click," 	"Double Click," and "Hover" activities in the Activities panel.
+4.	Drag the Activities onto the Workflow: Drag and drop the "Click," "Double Click," and "Hover" activities onto the workflow canvas.
+5.	Indicate the Target Element: With the activities on the canvas, you need to indicate the target element on the screen. To do this, use the UiExplorer tool or the "Indicate on 	Screen" option.
+6.	Configure the Activities:
+	•	For the "Click" activity, configure the options such as "Button" or "Link" and set the target element. In my case I have indicate it on “battery icon” in the taskbar after 	clicking it will show battery control panel.
+	•	For the "Double Click" activity, set the target element just like in the "Click" activity. In my case I have indicate it on “you Tube icon” in the taskbar I have pinned the 	youtube to taskbar earlier after double clicking it will open 2 YouTube page in your browser because of double click.
+	•	For the "Hover" activity, specify the target element to move the mouse cursor without clicking. In my case I have indicate it on “Weather icon” in the taskbar once mouse 	hover on weather icon it will show todays weather condition.
+7.	Run the Workflow: Once you have configured the activities, save the project and click on the "Run" button to execute the workflow.
+8.	Verify the Actions: Observe the automation in action. The mouse will perform the specified actions, such as clicking, double-clicking, or hovering over the target elements.
+
+Remember to test and adjust the selectors or other properties of the activities to ensure they accurately identify the target elements on your application or webpage.
+
+ii.	Type into 
+Steps:
+1.	Open UiPath Studio: Start by launching UiPath Studio on your computer.
+2.	Create a New Project: Click on "New Project" to create a new automation project. Give it a name and select the location where you want to save it.
+3.	Drag and Drop Activities: In UiPath Studio, you'll find a list of available activities on the left-hand side. Look for the "Type Into" activity in the Activities panel.
+4.	Drag the Activity onto the Workflow: Drag and drop the "Type Into" activity onto the workflow canvas.
+5.	Indicate the Target Element: With the activity on the canvas, you need to indicate the target element on the screen where you want to type. To do this, use the UiExplorer tool or 	the "Indicate on Screen" option.
+6.	Configure the Activity: In the properties of the "Type Into" activity, you can specify the text you want to type into the target element. You can enter a static value or use 	variables to dynamically input data.
+7.	Run the Workflow: Once you have configured the activity, save the project and click on the "Run" button to execute the workflow.
+8.	Verify the Action: Observe the automation in action. The "Type Into" activity will type the specified text into the target element, such as an input field.
+
+iii.	Type Secure text 
+Steps:
+1.	There’s a update in uipath studio earlier we have to use “Type Secure Text” activity for typing secured text such as password. Now u just need to click on eye icon in Type into activity this will change to secured text “ ****** ” 
+
+2.	Run the above type into practical just make changes to “secured text” by clicking on eye Icon.
+b)	Demonstrate the following events in UiPath: 
+i.	Element Triggering Event:
+ii.	Image Triggering Event:
+iii.	System Triggering Event:
+ 	Element Triggering Event:
+An element triggering event in UiPath is when a specific element on a webpage or application triggers an action. For example, let's say you want to automate the process of submitting a form on a website. You can use an element triggering event to simulate a click on the "Submit" button. When that button is clicked, it triggers the action of submitting the form. You can use activities like "Click" or "Type Into" to interact with the elements on the screen and perform actions based on those triggers.
+
+ 	Image Triggering Event:
+An image triggering event in UiPath is when a specific image on the screen triggers an action. This is useful when you want to automate a process based on the presence or absence of a particular image. For example, let's say you want to automate the process of checking if a certain icon appears on the screen. You can use an image triggering event to search for that icon and perform actions based on its presence or absence. The "Click Image" activity is commonly used for image triggering events.
+ 	System Triggering Event:
+A system triggering event in UiPath is when an external system or application triggers an action in your automation. This can be useful when you want to automate tasks that require interaction with other applications. For example, let's say you want to automate the process of sending an email. You can use a system triggering event to launch your email client and perform actions like composing and sending the email. The "Start Process" activity is commonly used for system triggering events.
+
+These events allow us to create more dynamic and interactive automations by responding to specific triggers.
+i.	Element Triggering Event:
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop a "Click" activity from the Activities panel onto the workflow canvas. This activity simulates a click on an element.
+3.	Indicate the element on the screen that you want to trigger the event by clicking on it.
+4.	Drag and drop the activities you want to perform when the element is triggered. For example, you can add activities to fill out a form or navigate to another page.
+5.	Save your workflow and run the automation.
+6.	The specified actions will be performed when the element triggering event occurs.
+ii.	Image Triggering Event:
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop a "Click Image" activity from the Activities panel onto the workflow canvas. This activity searches for a specific image on the screen and clicks on it.
+3.	Configure the properties of the "Click Image" activity by specifying the image you want to search for. You can use the "Indicate on Screen" option to select the image.
+4.	Drag and drop the activities you want to perform when the image is triggered. For example, you can add activities to extract data from a specific screen or perform certain actions.
+5.	Save your workflow and run the automation.
+6.	The specified actions will be performed when the image triggering event occurs.
+iii.	System Triggering Event:
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop a "Start Process" activity from the Activities panel onto the workflow canvas. This activity launches an external application or system process.
+3.	Configure the properties of the "Start Process" activity by specifying the file path or executable of the system process you want to trigger.
+4.	Drag and drop the activities you want to perform when the system triggering event occurs. For example, you can add activities to interact with the launched application or perform 	certain actions.
+5.	Save your workflow and run the automation.
+6.	The specified actions will be performed when the system triggering event occurs.
+
+c)	Automate the process of launching an assistant bot on a keyboard event. 
+	Keyboard events can be used as a trigger to perform certain actions or launch specific processes. In UiPath, you can capture keyboard events using the "Get Key" activity, which allows you to specify the type of key event (such as key down or key up) and the specific key that will trigger the automation. By connecting the "Get Key" activity to other actions or processes, you can automate tasks based on keyboard input. 
+This practical demonstrates how to automate the process of launching an assistant bot on a keyboard event in UiPath for beginners. Here's a simplified guide:
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop a "Get Key" activity from the Activities panel onto the workflow canvas. This activity will allow you to capture keyboard events.
+3.	Double-click on the "Get Key" activity to open its properties.
+4.	In the properties panel, select the type of key event you want to trigger the launch of the assistant bot. For example, you can choose "Key Down" or "Key Up".
+5.	In the "Key" property, specify the key you want to use as the trigger. For example, you can enter "Enter" if you want the bot to launch when the Enter key is pressed.
+6.	Drag and drop a "Start Process" activity from the Activities panel onto the workflow canvas. This activity will launch the assistant bot.
+7.	Configure the "Start Process" activity by specifying the file path or executable of the assistant bot you want to launch.
+8.	Connect the "Get Key" activity to the "Start Process" activity by dragging a connection between them.
+9.	Save your workflow and run the automation.
+10.	Test the automation by pressing the specified key. The assistant bot should launch when the key event is triggered.
+
+
+Practical No: 7
+Screen Scraping and Web Scraping methods
+a)	Automate the following screen scraping methods using UiPath: 
+Dataset [UiElement from which the data to be extracted.]:
+
+i.	Full Text
+	In this practical we’ll learn about how to automate screen scraping using the Full Text method using UiPath. 
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop the "Attach Browser" activity onto the workflow canvas. This activity allows you to specify the web browser you want to scrape data from.
+3.	Indicate the browser window you want to scrape by using the "Indicate on Screen" option in the properties panel of the "Attach Browser" activity. This will open a selector editor.
+4.	Use the selector editor to highlight and select the specific browser window you want to scrape data from. The selector is used to identify the target element on the screen.
+5.	Drag and drop a "Get Full Text" activity inside the "Attach Browser" activity. This activity is used to extract the full text from a specified element on the screen.
+6.	In the properties panel of the "Get Full Text" activity, indicate the target element by using the "Indicate on Screen" option. This will open a selector editor.
+7.	Use the selector editor to highlight and select the specific element from which you want to extract the full text. The selector should uniquely identify the target element.
+1.	Optionally, you can specify the timeout and retry options in the properties panel of the "Get Full Text" activity. These options control how long UiPath waits for the element to 	appear and how many times it retries before throwing an error.
+2.	Add an output variable to store the extracted text. In the properties panel of the "Get Full Text" activity, create a new variable of type String and assign it to the "Output" 	property.
+3.	You can use the extracted text in subsequent activities. For example, you can write the text to a file, store it in a variable, or perform further processing on it.
+4.	Run the workflow to automate the screen scraping using the Full Text method. UiPath will execute the activities and extract the full text from the specified element on the screen.
 Output:
- 
-P3B Write a program to implement Decision Tree and Random Forest with Prediction, Test Score and confusion matrix.
-#Code:	import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn import metrics
-import seaborn as sns
-from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
-from sklearn import tree
-iris = load_iris()
-data = pd.DataFrame(data = iris.data, columns = iris.feature_names)
-print(data)
-data['Species'] = iris.target
-target = np.unique(iris.target)
-target_n = np.unique(iris.target_names)
-target_dict = dict(zip(target, target_n))
-data['Species'] = data['Species'].replace(target_dict)
-x = data.drop(columns = "Species")
-y = data["Species"]
-names_features = x.columns
-target_labels = y.unique()
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state = 93)
-from sklearn.tree import DecisionTreeClassifier
-dtc = DecisionTreeClassifier(max_depth = 3, random_state =93)
-dtc.fit(x_train, y_train)
-plt.figure(figsize = (30,10), facecolor = 'b')
-Tree = tree.plot_tree(dtc, feature_names = names_features, class_names = target_labels, rounded = True, filled = True, fontsize = 14)
-plt.show()
-y_pred = dtc.predict(x_test)
-confusion_matrix = metrics.confusion_matrix(y_test, y_pred)
-matrix = pd.DataFrame(confusion_matrix)
-axis = plt.axes()
-sns.set(font_scale = 1.3)
-plt.figure(figsize = (10,7))
-sns.heatmap(matrix, annot = True, fmt ="g", ax = axis, cmap = "magma")
-axis.set_title('Confusion Matrix')
-axis.set_xlabel("Predicted Values", fontsize = 10)
-axis.set_xticklabels([''] + target_labels)
-axis.set_ylabel("True labels", fontsize = 10)
-axis.set_yticklabels(list(target_labels), rotation = 0)
-plt.show()
+
+ii.	Native 
+	Screen scraping using the Native method in UiPath. 
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop the "Attach Window" activity onto the workflow canvas. This activity allows you to specify the application window you want to scrape data from.
+3.	Indicate the window you want to scrape by using the "Indicate on Screen" option in the properties panel of the "Attach Window" activity. This will open a selector editor.
+4.	Use the selector editor to highlight and select the specific window you want to scrape data from. The selector is used to identify the target window.
+5.	Drag and drop a "Get Text" activity inside the "Attach Window" activity. This activity is used to extract the text from a specified element within the window.
+6.	In the properties panel of the "Get Text" activity, indicate the target element by using the "Indicate on Screen" option. This will open a selector editor.
+7.	Use the selector editor to highlight and select the specific element from which you want to extract the text. The selector should uniquely identify the target element.
+8.	Optionally, you can specify the timeout and retry options in the properties panel of the "Get Text" activity. These options control how long UiPath waits for the element to appear 	and how many times it retries before throwing an error.
+9.	Add an output variable to store the extracted text. In the properties panel of the "Get Text" activity, create a new variable of type String and assign it to the "Output" property.
+10.	You can use the extracted text in subsequent activities. For example, you can write the text to a file, store it in a variable, or perform further processing on it.
+11.	Run the workflow to automate the screen scraping using the Native method. UiPath will execute the activities and extract the text from the specified element within the window.
+	Remember to customize the selectors based on the specific application you are working with. Selectors should be robust and unique to ensure accurate scraping.
 Output:
- 
-  
-P4A For a given set of training data examples stored in a .CSV file implement Least Square Regression algorithm.
-# Code:	import pandas as pd
-def calculateB(x, y, n):
-    sx = sum(x)
-    sy = sum(y)
-    sxsy = 0
-    sx2 = 0
-    for i in range(n):
-        sxsy += x[i] * y[i]
-        sx2 += x[i] * x[i]
-    b = (n * sxsy - sx * sy)/(n * sx2 - sx * sx)
-    return b
-def leastRegLine(X,Y,n):
-    b = calculateB(X, Y, n)
-    meanX = int(sum(X)/n)
-    meanY = int(sum(Y)/n)
-    a = meanY - b * meanX
-    print("Regression line:")
-    print("Y = ", '%.3f'%a, " + ", '%.3f'%b, "*X", sep="")
-data = pd.read_csv('a.csv')
-X=data['X']
-Y = data['Y']
-n = len(X)
-leastRegLine(X, Y, n)
+
+iii.	OCR 
+	In this practical we will perform Automate screen scraping using OCR (Optical Character Recognition) in UiPath 
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop the "Attach Window" activity onto the workflow canvas. This activity allows you to specify the application window you want to scrape data from.
+3.	Use the "Indicate on Screen" option in the properties panel of the "Attach Window" activity to select the window you want to scrape. This helps UiPath identify the target window.
+4.	Drag and drop an "OCR Text Recognition" activity inside the "Attach Window" activity. This activity is used to extract text from images or elements that cannot be directly 	accessed.
+5.	Use the "Indicate on Screen" option in the properties panel of the "OCR Text Recognition" activity to select the area or element you want to perform OCR on. This helps UiPath 	identify the target area.
+6.	Configure the OCR engine by selecting the appropriate OCR provider (such as Microsoft OCR, Google OCR, or Abbyy OCR) in the properties panel of the "OCR Text Recognition" activity.
+7.	Create a variable of type String to store the extracted text. Assign this variable to the "Output" property of the "OCR Text Recognition" activity.
+8.	Customize the OCR options in the properties panel of the "OCR Text Recognition" activity if needed. These options include language selection, scale, and OCR engine-specific 	settings.
+9.	You can use the extracted text in subsequent activities. For example, you can write the text to a file, store it in a variable, or perform further processing on it.
+10.	Run the workflow to automate the screen scraping process using OCR. UiPath will execute the activities and extract the text from the specified area or element using OCR.
+Remember that OCR accuracy depends on factors like image quality, font type, and language. Adjust the OCR settings and experiment with different OCR engines to achieve the desired results.
 Output:
- 
-P4B For given set of training data stored in .CSV file implement Logistic Regression algorithm.
-# Code:	import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-dataset = pd.read_csv("Prac4B.csv")
-x = dataset.iloc[:, [2, 3]].values
-y = dataset.iloc[:, 4].values
-from sklearn.model_selection import train_test_split
-xtrain, xtest, ytrain, ytest = train_test_split(
-    x, y, test_size=0.25, random_state=0)
-from sklearn.preprocessing import StandardScaler
-sc_x = StandardScaler()
-xtrain = sc_x.fit_transform(xtrain)
-xtest = sc_x.transform(xtest)
-print (xtrain[0:10, :])
-from sklearn.linear_model import LogisticRegression
-classifier = LogisticRegression(random_state = 0)
-classifier.fit(xtrain, ytrain)
-y_pred = classifier.predict(xtest)
-from sklearn.metrics import accuracy_score
-print ("Accuracy : ", accuracy_score(ytest, y_pred))
-from matplotlib.colors import ListedColormap
-X_set, y_set = xtest, ytest
-X1, X2  = np.meshgrid(np.arange(start = X_set[:, 0].min() - 1,
-stop = X_set[:,0].max() + 1, step = 0.01),
-np.arange(start = X_set[:, 1].min() - 1,
-stop = X_set[:, 1].max() + 1, step = 0.01))
-plt.contourf(X1, X2, classifier.predict(
-np.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape),
-alpha = 0.75, cmap = ListedColormap(('red', 'green')))
-plt.xlim(X1.min(), X1.max())
-plt.ylim(X2.min(), X2.max())
-for i, j in enumerate(np.unique(y_set)):
-    plt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1],
-    color = ListedColormap(('red', 'green'))(i), label = j)   
-plt.title('Classifier (Test set)')
-plt.xlabel('Age')
-plt.ylabel('Estimated Salary')
-plt.legend()
-plt.show()
-Output:
- 
- 
+
+b)	Demonstrate Data Scraping and display values in Message box. 
+The aim is to extract text and images from a PDF File and store the output in a Message Box. 
+Follow the below steps to achieve the aim: 
+• To extract Text only use the Read PDF Text activity and use a message box to display the output. 
+• To extract Text inside images, use the Read PDF with OCR activity and use a message box to display the output. 
+Solution 
+Step 1: Follow the below steps to extract Text only from PDF documents. 
+Step 1.1: Drag the Read PDF Text Activity. In the activity, mention the path of the PDF Document from which data has to be extracted. 
+Step 1.2: Now, in the Properties Pane, of the Read PDF Text Activity, mention an output variable to see the output. To set an output variable, press on CTRL + K,and give a name. Here I have mentioned as output. 
+Step 1.3: After that, drag a message box in the same sequence and mention the output variable in it. 
+Step 1.4: Execute this sequence by clicking on the Run button. Your complete sequence and the output should look as shown in the below snapshots, respectively. 
+Step 2: Now, similarly if you want to extract the text in the images follow the below steps. 
+Step 2.1: Drag and drop the Read PDF with OCR Activity. In the activity, mention the path of the PDF Document from which data has to be extracted. 
+Step 2.2: Now, search for an OCR Engine, and drag and drop an OCR Engine based on whichever is installed. Here I have used Google OCR Engine. 
+Step 2.3: Now, in the Properties Pane, of the Read PDF with OCR Activity, mention an output variable to see the output. To set an output variable Press on CTRL + K, and give a name. Here I have mentioned as output. 
+Step 2.4: After that, drag a message box in the sequence and then mention the output variable in it. 
+Step 2.5: Execute this sequence by clicking on the Run button. Your complete sequence and the output should look as shown in the below snapshots, respectively
+
+c)	Demonstrate Screen Scraping for a pdf, web page and image file. 
+Follow the below steps to achieve the aim: 
+• Use the Data Scraping tool and record the data that you want to extract. 
+• Extract the correlated values accordingly. 
+• Use the Write CSV activity and mention the path of the .csv file 
+Solution 
+Step 1: Choose the website from where you want to extract data. 
+“In HOME TAB->Setting Toggle the Modern look for new Project to off” 
+Step 2: Choose the Data Scraping option from the Ribbon and select the element you want to choose. Press Next in the below Dialog Box.
+Step 2.1: Hover the mouse over a data source field and then click on the data source field
+Step 3: After that you will see another Dialog box which will ask you to choose the second element to create a pattern. 
+Step 4: Once you choose the second element to create a pattern, you will get an option to Configure Columns. In the Dialog Box, that opens up, you can rename the Column name and extract URL also. After that click on Next. Refer Below. 
+Step 5: You would see the below output. Now, to extract other data sources from the website, click on the Extract Correlated Data option and repeat the above steps. 
+Step 6: Once you are done extracting all the required data, click on Finish. This action would open a dialog box which will ask you if you wish to span the data across multiple pages. Refer below. 
+Step 7: To span across multiple pages, choose Yes and hover the mouse over the region which redirects you to the next page. Then you will be redirected to your UiPath Dashboard. Refer 	below. 
+Step 8: Now to store all the extracted data into a .csv file, drag a Write CSV activity into the Do section of the Data Scraping. 
+Step 9: In the File Path section of this activity, mention the path of the .csv file where you want to store the extracted data and then mention the ExtractDataTable variable in the 	DataTable section. Refer below. 
+NOTE: The ExtractDataTable variable is the output variable that is automatically generated from the Data Scraping Wizard. You can find this variable in the Extract Structured Data activity. 
+Step 10: Execute this sequence by clicking on the Run button. You would see that the data is getting stored in the .csv file as below.
 
  
-P5A Write a program to demonstrate the working of the decision tree based ID3 algorithm. Use an appropriate data set for building the decision tree and apply this knowledge to classify a new sample.
-# Code:	import math
-import csv
-def load_csv(DataFile):
-    lines=csv.reader(open(DataFile,"r"))
-    dataset=list(lines)
-    headers=dataset.pop(0)
-    return dataset,headers
-class Node:
-    def __init__(self,attribute):
-        self.attribute=attribute
-        self.children=[]
-        self.answer=""
-def subtables(data,col,delete):
-    dic={}
-    coldata=[row[col] for row in data]
-    attr= list(set(coldata))
-    counts=[0]*len(attr)
-    r=len(data)
-    c=len(data[0])
-    for x in range(len(attr)):
-        for y in range(r):
-            if data[y][col]==attr[x]:
-                counts[x]+=1
-    for x in range(len(attr)):
-        dic[attr[x]]=[[0 for i in range(c)] for j in range(counts[x])]
-        pos=0
-        for y in range(r):
-            if data[y][col]==attr[x]:
-                if delete:
-                    del data[y][col]
-                dic[attr[x]][pos]=data[y]
-                pos+=1
-    return attr,dic
-def entropy(S):
-    attr=list(set(S))
-    if len(attr)==1:
-        return 0
-    counts=[0,0]
-    for i in range(2):
-        counts[i]=sum([1 for x in S if attr[i]==x])/(len(S)*1.0)
-    sums=0
-    for cnt in counts:
-        sums+=-1*cnt*math.log(cnt,2)
-    return sums
-def compute_gain(data,col):
-    attr,dic=subtables(data,col,delete=False)
-    total_size=len(data)
-    entropies=[0]*len(attr)
-    ratio=[0]*len(attr)
-    total_entropy=entropy([row[-1] for row in data])
-    for x in range(len(attr)):
-        ratio[x]=len(dic[attr[x]])/(total_size*1.0)
-        entropies[x]=entropy([row[-1] for row in dic[attr[x]]])
-        total_entropy-=ratio[x]*entropies[x]
-    return total_entropy
-def build_tree(data,features):
-    lastcol=[row[-1] for row in data]
-    if(len(set(lastcol)))==1:
-        node=Node("")
-        node.answer=lastcol[0]
-        return node
-    n=len(data[0])-1
-    gains=[0]*n
-    for col in range(n):
-        gains[col]=compute_gain(data,col)
-    split=gains.index(max(gains))
-    node=Node(features[split])
-    fea=features[:split]+features[split+1:]
-    attr,dic=subtables(data,split,delete=True)
-    for x in range(len(attr)):
-        child=build_tree(dic[attr[x]],fea)
-        node.children.append((attr[x],child))
-    return node
-def print_tree(node,level):
-    if node.answer!="":
-       print("  "*level,node.answer)
-       return
-    print("  "*level,node.attribute)
-    for values,n in node.children:
-        print("  "*(level+1),values)
-        print_tree(n,level+2)
-def classify(node,x_test,features):
-    if node.answer!="":
-       print(node.answer)
-       return
-    pos=features.index(node.attribute)
-    for value,n in node.children:
-        if x_test[pos]==value:
-            classify(n,x_test,features)
-dataset,features=load_csv("5ADataFile.csv")
-node1=build_tree(dataset,features)
-print("The working of decision tree based ID3 algorithm.")
-print_tree(node1,0)
-testdata,features=load_csv("5ATest.csv")
-for xtest in testdata:
-    print("The test instance:",xtest)
-    print("The label for test instance is: ",end="  ")
-    classify(node1,xtest,features)
-Output:
- 
-P5B Write a program to implement k-Nearest Neighbor algorithm to classify the iris data set.
-# Code:	import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import seaborn as sns
-from sklearn import datasets
-from sklearn.model_selection import train_test_split , KFold
-from sklearn.preprocessing import Normalizer
-from sklearn.metrics import accuracy_score
-from sklearn.neighbors import KNeighborsClassifier
-from collections import Counter
-iris = datasets.load_iris()
-iris_df = pd.DataFrame(data= np.c_[iris['data'], iris['target']],columns= iris['feature_names'] + ['target'])
-iris_df.head()
-x= iris_df.iloc[:, :-1]
-y= iris_df.iloc[:, -1]
-x.head()
-y.head()
-x_train, x_test, y_train, y_test= train_test_split(x, y,test_size= 0.2, shuffle= True, random_state= 0)
-x_train= np.asarray(x_train)
-y_train= np.asarray(y_train)
-x_test= np.asarray(x_test)
-y_test= np.asarray(y_test)
-print(f'training set size: {x_train.shape[0]} samples')
-print(f'test set size: {x_test.shape[0]} samples')
-scaler= Normalizer().fit(x_train) 
-normalized_x_train= scaler.transform(x_train)
-normalized_x_test= scaler.transform(x_test)
-print('x train before Normalization')
-print(x_train[0:5])
-print('\nx train after Normalization')
-print(normalized_x_train[0:5])
-K=3
-knn=KNeighborsClassifier(K)
-knn.fit(normalized_x_train, y_train)
-y_pred_sklearn= knn.predict(normalized_x_test)
-print(y_pred_sklearn)
-Output: 	
- 
- 
-P6A Implement different Distance methods (Euclidean) with Prediction, Test Score & Confusion Matrix.
-# Code:	from sklearn import datasets
-from sklearn.model_selection import train_test_split
-#Load the Iris dataset
-iris = datasets.load_iris()
-X = iris.data # Features
-y = iris.target  # Target variable (classes)
-# Split the dataset into a training set and a testing set (70% training, 30% testing)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-from sklearn.metrics import pairwise_distances
-distances=pairwise_distances(X_test,X_train,metric='euclidean')
-import numpy as np
-def find_k_nearest_neighbours(distances,k):
-    k_nearest_neighbours_indices=np.argsort(distances,axis=1)[:,:k]
-    return k_nearest_neighbours_indices
-k=5
-k_nearest_neighbours_indices=find_k_nearest_neighbours(distances,k)
-from scipy.stats import mode
-def predict_majority_class(k_nearest_neighbours_indices,y_train):
-    k_nearest_classes=y_train[k_nearest_neighbours_indices]
-    predictions,_=mode(k_nearest_classes,axis=1)
-    return predictions.ravel()
-y_pred=predict_majority_class(k_nearest_neighbours_indices,y_train)
-from sklearn.metrics import accuracy_score,classification_report,confusion_matrix
-accuracy=accuracy_score(y_test,y_pred)
-print("Accuracy:",accuracy) print("Classification Report:") print(classification_report(y_test,y_pred)) 
-print("Confusion Matrix") print(confusion_matrix(y_test,y_pred))
-Output:
- 
-P6B Implement the classification model using clustering for the following techniques with K means clustering with Prediction, Test Score and Confusion Matrix.
-# Code:	import csv
-from collections import Counter
-import matplotlib.pyplot as plt
-import numpy as np
-import sklearn.metrics as sm
-from sklearn.mixture import GaussianMixture
-from sklearn.cluster import KMeans
-from sklearn.metrics import accuracy_score,classification_report, confusion_matrix
-class_dict = {'setosa': 0, 'versicolor': 1, 'virginica': 2}
-with open('ds6B.csv') as csvFile:
-    dataset = [line for line in csv.reader (csvFile)]
-    dataset = dataset [1:]
-    x=[]
-    y=[]
-    for line in dataset:
-        x.append(line[:-1])
-        y.append(class_dict[line[-1]])
-    x=np.array (x).astype(float)
-    y=np.array (y).astype(int)
-def rename_clusters(s):
-    cnt=Counter((cl, c2) for cl, c2 in zip(s, y))
-    most_common = cnt.most_common()
-    map_dict = {}
-    for tup in most_common:
-        if not tup[0][0] in map_dict:
-            map_dict[tup[0][0]] = tup[0][1]
-    for i in range(len(s)):
-        s[i] = map_dict[s[i]]
-    return s
-kmeans = KMeans(n_clusters=3)
-kmeans.fit(x)
-y_kmeans=kmeans.predict (x)
-km = rename_clusters (y_kmeans)
-plt.scatter(x[:, 0], x[:, 1], c=km, s=40, cmap='viridis')
-print ("Accuracy KM : ", sm.accuracy_score(y, km))
-plt.show()
-print ("Classification Report:") print (classification_report (y,km))
-print ("Confusion Matrix:")print (confusion_matrix(y,km))
-Output: 
-     
-P7A Implement the classification model using clustering for the following techniques with hierarchical clustering with Prediction, Test Score and Confusion Matrix
-#Code:	import numpy as np
-from scipy.cluster.hierarchy import dendrogram,linkage
-import matplotlib.pyplot as plt
-#randomly chosen dataset
-x=np.array([[1, 2], [1, 4], [1, 0],
-        	      [4, 2], [4, 4], [4, 0]])
-#Perform hierarchical clustering
-z = linkage(x, 'ward')
-# Plot dendrogram
-dendrogram (z)
-plt.title ('Hierarchical Clustering Dendrogram')
-plt.xlabel ('Data point')
-plt.ylabel ('Distance')
-plt.show()
-Output:
- 
- 
+Practical No: 8
+PDF Automation and Exception Handling
+a)	Read PDF With OCR 
+Steps: 
+1.	Drag and drop the Read PDF with OCR Activity. In the activity, mention the path of the PDF Document from which data has to be extracted. 
+2.	Now, search for an OCR Engine, and drag and drop an OCR Engine based on whichever is installed. Here I have used Google OCR Engine. 
+3.	Now, in the Properties Pane, of the Read PDF with OCR Activity, mention an output variable to see the output. To set an output variable Press on CTRL + K, and give a name. Here I 	have mentioned as output. 
+4.	After that, drag a message box in the sequence and then mention the output variable in it. 
+5.	Execute this sequence by clicking on the Run button. Your complete sequence and the output should look as shown in the below snapshots, respectively.
 
-P8A Write a program to construct a Bayesian network considering medical data. Use this model to demonstrate the diagnosis of heart patients using standard Heart Disease Data Set.
-#Code:	import pandas as pd
-from pgmpy.estimators import MaximumLikelihoodEstimator
-from pgmpy.models import BayesianModel
-from pgmpy.inference import VariableElimination
-data = pd.read_csv("ds8A.csv")
-heart_disease = pd.DataFrame (data)
-print (heart_disease)
-model = BayesianModel 
-([('age', 'Lifestyle'),
-   ('Gender', 'Lifestyle'),
-   ('Family', 'heartdisease'),
-   ('diet', 'cholestrol'),
-   ('Lifestyle', 'diet'),
-   ('cholestrol', 'heartdisease'),
-   ('diet','cholestrol') ])
-model.fit(heart_disease, estimator=MaximumLikelihoodEstimator)
-HeartDisease_infer = VariableElimination (model)
-print ('For Age enter SuperSeniorcitizen:0, Seniorcitizen:1')
-print ("MiddleAged:2, Youth:3, Teen:4")
-print ('For Gender enter Male:0, Female:1')
-print ('For Family History enter Yes:1, No:0')
-print ('For Diet enter High:0, Medium:1')
-print ('for Lifestylp enter Athlete:0, Active:1, Moderate:2, Sedentary:3')
-print ('for Cholesterol enter High:0, Borderline:1, Normal:2')
-q = HeartDisease_infer.query(variables=['heartdisease'], evidence={
-'age': int (input ('Enter Age: ')),
-'Gender': int (input ('Enter Gender: ')),
-'Family': int (input ('Enter Family History: ')),
-'diet': int (input ('Enter Diet: ')),
-'Lifestyle': int (input ('Enter Lifestyle: ')),
-'cholestrol': int (input ('Enter Cholestrol: '))
-})
-print(q)       
-Output:
+b)	Merge PDF’s into one
+Steps:
+1.	Open UiPath Studio & create a new project by clicking on "New Project" in the start page.
+2.	Drag and drop sequence on workflow. then search Assign activity and drop it to sequence
+3.	Create a variable pdf of type system.pdf [] now in assign activity under “save to” field type pdfs variable & in “Value to Save” field type Directory.GetFiles(“Type the path of 	your pdfs”).
+4.	Drag and drop “Join Pdf Files” Activity below Assign Activity. 
+5.	Under “Output File Name” field type file path along with file name inside double inverted comma.in my case "C:/Users/vikas/Desktop/pdf/merge.pdf"
+6.	Save your project and run it to merge the PDFs into one.
  
-P8B Implement the non-parametric Locally Weighted Regression algorithm in order to fit data points. Select appropriate data set for your experiment and draw graphs.
-# Code:	import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
-def kernel (point, xmat, k):
-    m,n = np.shape (xmat)
-    weights = np.mat (np.eye((m)))
-    for j in range (m):
-        diff = point - x[j]
-        weights[j,j] = np.exp(diff*diff.T/(-2.0*k**2))
-    return weights
-def localWeight (point, xmat, ymat, k):
-    wei = kernel (point,xmat,k)
-    W= (x.T* (wei*x)).I* (x.T* (wei*ymat.T))
-    return W
-def localWeightRegression (xmat, ymat, k):
-    m,n= np.shape (xmat)
-    ypred = np.zeros (m)
-    for i in range (m):
-        ypred[i] = xmat[i]*localWeight (xmat[i],xmat,ymat,k)
-    return ypred
-#load data points
-data = pd.read_csv('ds8B.csv')
-bill = np.array(data.total_bill)
-tip = np.array (data.tip)
-#preparing and add 1 in bill
-mbill = np.mat (bill)
-mtip = np.mat (tip)
-m= np.shape (mbill) [1]
-one = np.mat (np.ones(m))
-x= np.hstack((one.T,mbill.T))
-ypred = localWeightRegression (x, mtip,0.5)
-SortIndex = x[:,1].argsort(0)                                                                                           
-xsort=x[SortIndex][:,0]
-fig=plt.figure()
-ax=fig.add_subplot(1,1,1)
-ax.scatter (bill,tip, color='green')
-ax.plot (xsort [:,1], ypred[SortIndex], color= 'red',linewidth=5)
-plt.xlabel ('Total bill')
-plt.ylabel ('Tip')
-plt.show();
-Output:
- 
- 
-P9A Build an Artificial Neural Network by implementing the Backpropagation algorithm and test the same using appropriate data sets.
-# Code:	import numpy as np
-X = np.array(([2, 9], [1, 5], [3, 6]), dtype=float)
-y = np.array(([92], [86], [89]), dtype=float)
-X = X/np.amax(X,axis=0) #maximum of X array longitudinally
-y = y/100
-#Sigmoid Function
-def sigmoid (x):
-    return 1/(1 + np.exp(-x))
-#Derivative of Sigmoid Function
-def derivatives_sigmoid(x):
-    return x * (1 - x)
-#Variable initialization
-epoch=5 #Setting training iterations
-lr=0.1 #Setting learning rate
-inputlayer_neurons = 2 #number of features in data set
-hiddenlayer_neurons = 3 #number of hidden layers neurons
-output_neurons = 1 #number of neurons at output layer
+c)	Get PDF Total Page count Using Regex 
+	This practical demonstrates step-by-step explanation of how to get the total page count of a PDF using regex in UiPath. Here's a simplified explanation:
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop the "Read PDF Text" activity from the activities panel onto the workflow. This activity allows you to extract the text content from a PDF file.
+3.	In the properties panel of the "Read PDF Text" activity, specify the path of the PDF file you want to extract the text from.
+4.	Create a new variable of type String to store the extracted text. Let's name it "pdfText".
+5.	Connect the output of the "Read PDF Text" activity to the "pdfText" variable using an assign activity. This assigns the extracted text to the variable.
+6.	Drag and drop the "Matches" activity from the activities panel onto the workflow. This activity allows you to find all matches of a regex pattern in a given text.
+7.	In the properties panel of the "Matches" activity, specify the following:
+a.	Input: pdfText
+b.	Pattern: Enter your regex pattern here. For example, if the page numbers are in the format "Page X of Y", the regex pattern could be "Page \d+ of (\d+)".
+8.	Create a new variable of type List<Match> to store the matches. Let's name it "pageMatches".
+9.	Connect the output of the "Matches" activity to the "pageMatches" variable using an assign activity. This assigns the matches to the variable.
+10.	Create a new variable of type Int32 to store the total page count. Let's name it "totalPageCount".
+11.	Use an assign activity to assign the total page count by extracting the last match from the "pageMatches" variable and converting it to an integer. For example, you can use 	"totalPageCount = Convert.ToInt32(pageMatches(pageMatches.Count-1).Groups(1).Value)".
+12.	Finally, you can display the total page count using a message box activity or by storing it in a variable for further use in your automation.
+13.	Remember to adjust the regex pattern based on the specific format of the page numbers in your PDF. Also, make sure to handle any exceptions or errors that may occur during the process.
+			
+d)	Demonstrate Exception Handling using UiPath 
+	In this practical we’ll learn about how to demonstrate exception handling in UiPath. Here's a simplified explanation:
+Steps:
+1.	Open UiPath Studio and create a new project.
+2.	Drag and drop the activities you want to include in your workflow.
+3.	Enclose the activities that may throw exceptions within a "Try Catch" activity. This allows you to catch and handle any exceptions that occur during the execution of those 	activities.
+4.	Inside the "Try" block of the "Try Catch" activity, place the activities that you want to execute.
+5.	Inside the "Catch" block of the "Try Catch" activity, place the activities that you want to execute when an exception occurs.
+6.	Drag and drop an "Assign" activity inside the "Catch" block to create a variable that will store the exception message. Let's name it "errorMessage" of type String.
+7.	In the properties panel of the "Assign" activity, assign the value "exception.Message" to the "errorMessage" variable. This retrieves the error message from the exception.
+8.	Add activities within the "Catch" block to handle the exception. For example, you can use a "Log Message" activity to log the error message, a "Send Email" activity to send an 	email notification, or a "Message Box" activity to display an error message to the user.
+9.	If needed, you can also include a "Finally" block within the "Try Catch" activity. The activities inside the "Finally" block will always execute, regardless of whether an exception 	occurs or not. This is useful for cleanup tasks or activities that should always be performed.
+10.	Run the workflow to test the exception handling. You can intentionally introduce errors in the activities within the "Try" block to see how the exception is caught and handled in 	the "Catch" block.
+Remember to customize the exception handling based on your specific requirements and the types of exceptions you expect to encounter. You can use different types of exceptions, such as "System.Exception" for general exceptions or specific exceptions like "System.IO.IOException" for input/output errors.
 
-#weight and bias initialization
-wh=np.random.uniform(size=(inputlayer_neurons,hiddenlayer_neurons))
-bh=np.random.uniform(size=(1,hiddenlayer_neurons))
-wout=np.random.uniform(size=(hiddenlayer_neurons,output_neurons))
-bout=np.random.uniform(size=(1,output_neurons))
-#draws a random range of numbers uniformly of dim x*y
-for i in range(epoch):
-    #Forward Propogation
-    hinp1=np.dot(X,wh)
-    hinp=hinp1 + bh
-    hlayer_act = sigmoid(hinp)
-    outinp1=np.dot(hlayer_act,wout)
-    outinp= outinp1+bout
-    output = sigmoid(outinp)
-    #Backpropagation
-    EO = y-output
-    outgrad = derivatives_sigmoid(output)
-    d_output = EO * outgrad
-    EH = d_output.dot(wout.T)
-    hiddengrad = derivatives_sigmoid(hlayer_act)#how much hidden layer wts contributed to error
-    d_hiddenlayer = EH * hiddengrad
-    wout += hlayer_act.T.dot(d_output) *lr   # dotproduct of nextlayererror and currentlayerop
-    wh += X.T.dot(d_hiddenlayer) *lr
-    print ("-----------Epoch-", i+1, "Starts----------")
-    print("Input: \n" + str(X)) 
-    print("Actual Output: \n" + str(y))
-    print("Predicted Output: \n" ,output)
-    print ("-----------Epoch-", i+1, "Ends----------\n")
-print("Input: \n" + str(X)) 
-print("Actual Output: \n" + str(y))
-print("Predicted Output: \n" ,output)
-Output:
- 
+			 
+Practical No: 9
+Email Automation
+ 	Configure Email using UiPath 
+a)	Read Emails 
+Theory: Emails are widely used in automation for the purpose of communication between users and robots. 
+Sometimes emails act as the input to a few processes!!!
+Let us see how to retrieve mail’s Body, Subject and Sender details using UiPath activities.
+Let us implement a workflow which will read the emails from Gmail server and retrieve the emails. 
+Step 1: Drag “Get IMAP Mail Messages” activity into the designer panel and supply the required 
+parameters to it as shown below.
+Step 2: Drag “For Each” activity into the designer panel and pass the above-created mail List to it.
+And change the “TypeArgument” in the properties panel to System.Net.Mail.MailMessage
+Step 3: Drag “Message Box” activities into the designer panel to display the Sender details, 
+Subject and Body of the received mail.
+Step 3: Now, execute the project!!!
 
-P9B Assuming a set of documents that need to be classified, use the naïve Bayesian Classifier model to perform this task.
-# Code:	import pandas as pd
-msg = pd.read_csv('ds9B.csv', names=['message', 'label'])
-print("Total Instances of Dataset: ", msg.shape[0])
-msg['labelnum'] = msg.label.map({'pos': 1, 'neg': 0})
-X = msg.message
-y = msg.labelnum
-from sklearn.model_selection import train_test_split
-Xtrain, Xtest, ytrain, ytest = train_test_split(X, y)
-from sklearn.feature_extraction.text import CountVectorizer
-count_v = CountVectorizer()
-Xtrain_dm = count_v.fit_transform(Xtrain)
-Xtest_dm = count_v.transform(Xtest)
-df = pd.DataFrame(Xtrain_dm.toarray(),columns=count_v.get_feature_names())
-print(df[0:5])
-from sklearn.naive_bayes import MultinomialNB
-clf = MultinomialNB()
-clf.fit(Xtrain_dm, ytrain)
-pred = clf.predict(Xtest_dm)
-for doc, p in zip(Xtrain, pred):
-    p = 'pos' if p == 1 else 'neg'
-    print("%s -> %s" % (doc, p))
-from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score
-print('Accuracy Metrics: \n')
-print('Accuracy: ', accuracy_score(ytest, pred))
-print('Recall: ', recall_score(ytest, pred))
-print('Precision: ', precision_score(ytest, pred))
-print('Confusion Matrix: \n', confusion_matrix(ytest, pred))
-Output:
  
+b)	Send Email with Attachment 
+	In this practical, we are going to learn how we can automate sending emails using Uipath Studio. This project is a basic application of Robotic Process Automation (RPA). The user just needs to provide their login credentials and the user email they want to send the email and that is it, rest of the work will be done by the bot that we are going to create using the steps mentioned below –
+Note: For this automation to work you need to enable access from Less Secure apps on your Gmail account. 
+Step-1: Create a new process in Uipath Studio by clicking on the Process Tab.
+Step-2: Set the name of the process, give a brief description, and click on Create. The Uipath studio will automatically load and add all the dependencies of the project.
+The following screen will be opened.
+Step-3: Now in the activities panel search for Sequence activity. Drag and drop it in the designer window.
+Step-4: Now in the sequence add an Input dialog box using the search activity panel.  
+Step-5: Now click on the Variables tab to create a variable of string type that will store the personal email id entered by the user. In the properties panel of the Input Dialog activity add the variable in the Output area. 
+Create two more string variables, one for storing the password of the user and the second for storing the recipient email id.
+Step-6: Now add another Input dialog box and pass the variable created earlier to store the password in the Output Area of the properties panel. Click the checkbox IsPassword for this activity.
+Step-7: Finally add another Input dialog box for taking the recipient email id from the user. Pass the variable created earlier in the Output Area.
+Step-8: Now in the Activity Panel search for Send SMTP Mail Message activity. Drag and drop it to the sequence.
+Step-9: In the To field pass the variable that stores the recipient email id. Specify the subject and body of the mail.
+Step-10: In the Properties panel, set Port no. to 587 and Server to smtp.gmail.com. Pass the variables that store user credentials in the email and password field respectively.
+Step-11: Finally add a Message Box activity. Specify the message you want to display as a notification that the email was sent successfully.
+Step-12: Save the process using the Save button in the design panel and then click on Run. Your bot is ready for sending automated emails.
+c)	Save Email Attachments
+	Theory: The aim is to save the attachments of the top 30 emails which have a keyword in the subject line. The attachments will be stored in a particular folder. 
+Steps To Automate Follow the below steps to achieve the aim: 
+	Assign the Email address to a variable and mention the password in the Get Password activity. 
+	Use the Get IMAP mail messages activity and mention the folder, port number and server. 
+	For each mail mention the keyword that you want to consider and then use an If-else loop. 
+	In the If section, use the Save Attachments activity and mention the destination directory. 
+Step 1: Create variables such as Email, Password, and GetMailMessages of String, String and List respectively.
+Step 2: Drag the Assign activity and assign the To section of the activity to Email variable and value to the email address from which you want the details to be read. 
+Step 3: Drag the Get Password activity, and mention Password for your email ID in the Password section of the Properties pane. Also, mention the Password variable in the Result pane. 
+Step 4: Drag the Get IMAP Mail Message activity and mention the following details in the Properties pane. 
+In the section of: 
+•	MailFolder – “Inbox” 
+•	Port – 993 
+•	Server – “imap.gmail.com” 
+•	Email – Email variable 
+•	Password – Password variable 
+•	Top – 30 
+•	Messages – GetMailMessages 
+Refer to the snapshot below. 
+Your execution should look like below till the above step. 
+Step 5: Drag the For Each activity, and then mention mail in the item section and the GetMailMessages in the variable expression section. 
+Step 6: Now, in the Body section of this activity, drag the If activity. In this activity, you have to specify the condition to save the attachments if the subject line contains a keyword. To do so, follow the below steps. 
+Step 6.1: In the Condition section of the If activity, mention mail.Subject.Contains(“example”), where ‘example’ is the keyword that has to be considered. 
+Step 6.2: Go to the properties section of For Each activity and in the Type Argument mention System.Net.Mail.Message. Refer to the snapshot below. 
+Step 6.3: In the Then section of the If-activity, drag the Save Attachments activity. In this activity, mention the mail variable in the mail message area and the path of the folder where all the attachments have to be saved. Refer below. 
+Step 7: Execute this sequence by clicking on the Run button. You would see that all the emails having the keyword example, in the subject line, would be read and the attachments would be stored in the mentioned folder.
+d)	Reply to Email 
+Steps:
+1.	First, open UiPath Studio on your computer. create a new project by clicking on "New Project" in the start page.
+2.	Give your project a name and select the location where you want to save it. Click on "Create" to proceed.
+3.	In the project, you'll see a sequence of activities. Drag and drop the "Open Browser" activity from the Activities panel to the sequence.
+4.	Configure the "Open Browser" activity by providing the URL of your email provider's website and selecting the browser you want to use.
+5.	Next, drag and drop the "Type Into" activity to the sequence. This activity will allow you to enter the email address, subject, and message body.
+6.	Configure the "Type Into" activity by indicating the email address field, subject field, and message body field on the email compose page.
+7.	Use variables or arguments to dynamically pass the email address, subject, and message body to the "Type Into" activity.
+8.	After entering the email details, drag and drop the "Click" activity to the sequence. This activity will simulate clicking the send button.
+9.	Configure the "Click" activity by indicating the send button on the email compose page.Finally, save and run your UiPath project to send the reply email.
 
-P10 Perform Text pre-processing, Text clustering, classification with Prediction, Test Score & Confusion Matrix
-# Code:	import pandas as pd
-msg = pd.read_csv('ds9B.csv', names=['message', 'label'])
-print("Total Instances of Dataset: ", msg.shape[0])
-msg['labelnum'] = msg.label.map({'pos': 1, 'neg': 0})
-X = msg.message
-y = msg.labelnum
-from sklearn.model_selection import train_test_split
-Xtrain, Xtest, ytrain, ytest = train_test_split(X, y)
-from sklearn.feature_extraction.text import CountVectorizer
-count_v = CountVectorizer()
-Xtrain_dm = count_v.fit_transform(Xtrain)
-Xtest_dm = count_v.transform(Xtest)
-df = pd.DataFrame(Xtrain_dm.toarray(),columns=count_v.get_feature_names())
-print(df[0:5])
-from sklearn.naive_bayes import MultinomialNB
-clf = MultinomialNB()
-clf.fit(Xtrain_dm, ytrain)
-pred = clf.predict(Xtest_dm)
-for doc, p in zip(Xtrain, pred):
-    p = 'pos' if p == 1 else 'neg'
-    print("%s -> %s" % (doc, p))
-from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score
-print('Accuracy Metrics: \n')
-print('Accuracy: ', accuracy_score(ytest, pred))
-print('Recall: ', recall_score(ytest, pred))
-print('Precision: ', precision_score(ytest, pred))
-print('Confusion Matrix: \n', confusion_matrix(ytest, pred))
+Practical No: 10
+Orchestrator management and mini project
+a)	Deploy bots to Orchestrator &
+b)	Run jobs from Orchestrator 
+ 	To deploy and run Robots to Orchestrator, we need to configure the machine with Orchestrator. To do this, we first have to create a provisioning Robot from the Orchestrator URL:https://platform.uipath.com
+Creating a provision Robot from the Orchestrator:
+The user needs; permissions to register the new Robot and they must have the following information:
+	The name of the machine and the key required to connect to Orchestrator. They can be found through the Control Panel | System, for the key, log on to the Orchestrator URL, click on the ROBOTS page, then click on the + button. A pop-up window appears where your key is visible. Security | System and User | Settings | Deployment, which provides us the Robot API Key. 
+	The username and password of the specified machine to access it.
+	To create the provision Robot, go to the Orchestrator. Click on the Robot option on the left side of the Orchestrator page.
+	After displaying the Robot page, click on the + button. It will display a small window to create a provision Robot:
+	After the window is displayed, fill in all the mandatory information that is required to connect the Robotdmachine name, Robot name, username/domain name, password, type, and description, as given in the following screenshot:
+	In the Machine * field section, enter the machine name that is required to connect to Orchestrator.
+	From the Name * field enter the desired name of the Robot.
+	Now in the Domain\Username * field, type the name that will be used to log in to the defined machine. Here, we need to define the format Domain/Username * if the user is in the domain. It is compulsory to choose a short domain name. 
+	Password field is optional; it can be skipped.
+	We can choose the type of Robot from the drop-down list.
+	The description field is also optional. You can give a short summary describing your Robot.
+	Now copy the Robot Key * and paste the key in UiPath Robot while configuring your Robot.
+	Click the PROVISION button and the Robot will be displayed on the Robot page.
+ Connecting a Robot to Orchestrator
+When we deploy a Robot to Orchestrator, we must have the machine name and the key for each Robot. To keep the value of these fields, we can create another Robot from the Provisional Robot windows. 
+If we want to create a new Robot, we have to take authentication from administrator. By default, the administrator has the right to register a new Robot.
+To connect the Robot machine to Orchestrator, follow the given steps:
+1.	From the system taskbar, click on UiPath Robot. The Robots windows will be displayed:
+2.	Now go to Options and choose Settings...; the Robot Settings will be displayed:
+3.	In the Robot Key field, paste the received key of provision Robot to Orchestrator.
+4.	In the Orchestrator URL field, enter the address of the Orchestrator.
+5.	Now click the Connect button. After clicking the Connect button, the Robot will connect to the Orchestrator.
+	Deploy the Robot to Orchestrator
+To deploy our Robot, first of all, it must be connected to Orchestrator. Ensure that our bot is connected to Orchestrator then follow the given steps to deploy it:
+1.	First of all, install UiPath on the machine.
+2.	Provision the Robot machine and take the Robot key from Orchestrator.
+3.	After receiving the key go to the Robot configuration panel and enter the key here.
+4.	Also, you need to enter the Robot key into the configuration URL, which can be found from the admin section of Orchestrator.
+5.	Publish the project with publish utility from UiPath. When it is published successfully, it will display the information shown in the following screenshot:
+6.	The project has been published in the Orchestrator.
+7.	To create the environment, go to the home page, click on the ROBOTS option, and click on the Environments Tab. Then click on the + button:
+8.	Once the details are filled in, click on Create:
+9.	After creating the environment, a small window will appear as shown in the following screenshot, where we can manage the Robot within the environment:
+10.	After clicking on the + button, a will window pop-up where we can choose the Published package, as shown in the following screenshot, and then click on the CREATE button:
+11.	After clicking the Deploy Process button, a window popup will appear where we can choose the published package, as shown in the following screenshot, and then click on the CREATE button.
+OR
+12.	Packages can be manually uploaded from the local directory after clicking the View Packages option and then clicking the Upload button as given in the following screenshot: PROCESS | View Packages | Upload Packages:
+13.	Now the package has been deployed to the Orchestrator and is ready to be executed through the web.
+14.	Next, click the JOBS option for execution and click on the Start icon as shown:
+
+15.	After clicking the Start Job button, the Robot will execute over Orchestrator.
+
+c)	Queue Introduction: 
+i.	Add items to Queue. 
+Theory: To demonstrate how to add items into a queue, let us create an automation that processes entries contained in a .xlsx file. Let’s say you represent a banking institution and you have a deposits’ report of 50 clients. You want to process the data of each client that previously deposited an On-Us Check smaller than $5000, using a third-party financial application. The report contains the name of the client, the On-Us Check value, and two other additional values, let’s say Cash In and Not On-Us Check. We create a workflow in which the QueueItem variable stores, by turn, the information of each client. Each entry read by the QueueItem variable is then stored in a queue item and added to the designated queue in Orchestrator. The result of this whole process is a queue which contains each clients’ specific information. Before proceeding to the actual workflow, you might want to take a look at the clients’ report here. 
+We are going to work with the "July Reports" sheet. Without further do: 
+1.	Create a new sequence. 
+2.	Add an Use Excel File activity inside the sequence, and define the location of the workbook in the Excel File pane of the activity. 
+3.	Inside the Do section, add a Read Range activity to read the desired range of values from the report and store them in a DataTable variable. In our case, type "A1-D51" or simply leave the default value, “”, which means the entire spreadsheet is read. 
+Read Range Value : Excel.Sheet("July Report").Range("A1:D51") 
+In Save To Press Ctrl+k and Name the variable as DataTable1 
+4.	In the Data Table field, press Ctrl + K to create a new DataTable variable which stores the previously read data range. Name it DataTable1 or similar. The Variables pane should also display the newly created variable as follows:
+
+5.	Next, add a For Each Row activity to the Designer panel and fill in the blank fields with “row” and the name of the DataTable variable, DataTable1, respectively. This activity performs the action defined in the Body section for each row in the data table. The Do section should look similar to the following screenshot so far:
+
+6.	In the Body section of the For Each Row activity, add an Add Queue Item activity. This adds an item to a queue (defined below at steps 8 and 12), for each row in the spreadsheet. 
+7.	In the Properties pane, in the QueueName field, type the name of the queue you want your items to be stored in, let's say ReportQueue. 
+8.	In the Input section, click the button corresponding to the ItemInformation field to open the ItemInformation window. Create 4 arguments, each corresponding to a column from the report. Define them as follows: 
+	Name, keeping the default values for Direction and Type, and with Value set to row(0).ToString. This retrieves the value from the column with the counter 0 for each row in the workbook, in our case the name of the client. 
+	CashIn, keeping the default values for Direction and Type, and with Value set to row(1).ToString. This retrieves the value from the column with the counter 1 for each row in the workbook, in our case the Cash In value. 
+	OnUsCheck, keeping the default values for Direction and Type, and with Value set to row(2).ToString. This retrieves the value from the column with the counter 2 for each row in the workbook, in our case the On-Us Check value. 
+	NotOnUsCheck, keeping the default values for Direction and Type, and with Value set to row(3).ToString. This retrieves the value from the column with the counter 3 for each row in the workbook, in our case the Not On-Us Check value. 
+9.	The ItemInformation window should look similar to the following screenshot: 
+
+10.	Connect Studio’s Robot to Orchestrator. For details on how to do it, click here. 
+11.	Navigate to https://platform.uipath.com, log in using your credentials, and then create a queue, ReportQueue, to store the items. Make sure that, whatever name you used above (step 8), you use the same here. 
+12.	Go back to Studio. At this point your workflow should be error-free and functional, so the next step is to make it available to Orchestrator. In this regard click Design > Publish. 
+13.	To run the process, click Design > Run
+Note: Take into account that, after being processed, queue items become transactions, and are further handled as such. 
+14.	Navigate to https://platform.uipath.com again and display the transactions.
+
+ii.	Get Queue item from Orchestrator 
+Theory: To demonstrate how to further process transactions from a queue, we are going to create a second workflow which retrieves from the appropriate queue, the transactions with an On-Us Check value smaller than $5000. For each transaction that meets the condition, the values are collected and introduced into a third-party dummy application. The other ones are labeled as business exceptions. 
+1.	Go to Design > New > Flowchart to create a new file in the project initiated above. 
+2.	Add an Open Application activity to open the third-party dummy application. Connect it to the Start node. 
+3.	Fill in the required details (Display Name, FileName, Selector) on the Properties panel, and configure the activity to log in with the corresponding credentials. Use admin for the Username field, and password for the Password field. 
+4.	In the FileName field, fill in the path of the application. 
+5.	In the Selector field, using Selector Editor, define a selector for UIDemo.
+6.	Add a Should Stop activity to the Designer panel and connect it to the Open Application activity. 
+7.	Add a Flow Decision activity to the Designer panel and connect it to the Should Stop activity. These last two activities check if you stopped the job while it was still running. This gives you the possibility to further configure the workflow to perform various safety routines after the stop is triggered. See below an example of such a routine: 
+	Add a Log Message activity and connect it to the True branch of the previously added flow decision. 
+	In the Properties panel, in the Message field, type “Stop process required” or something similar to be displayed if the stop is triggered. 
+	Add a Close Application activity and connect it to the Log Message activity previously added. 
+	In the Properties panel, in the DisplayName field, after Close application, type UIDemo.exe UIDemo. 
+8.	Add a Get Transaction Item activity to the False branch of the flow decision added previously (step 7). This activity retrieves the transaction items from the queue and stores them, by turn, with each iteration of the loop, in a QueueItem variable. 
+9.	In the Properties pane, in the QueueName field, type the name of the queue which stores your items. In our case, as defined in the Uploading Items into a Queue section, the name is "ReportQueue". 
+10.	In the TransactionItem field, press Ctrl+K to create the QueueItem variable which stores each transaction item. Name it "TransItem" or similar.
+11.	Add a Flow Decision activity to the Designer panel and connect it to the Get Transaction Item activity. 
+12.	In the Properties pane, in the Condition field, type TransItem isNot Nothing. This activity checks the value of each item to determine if the end of the queue has been reached. 
+13.	Connect the False branch of the flow decision to the Log Message activity created in step 7. This ensures the job stops when the end of the queue is reached. 
+14.	Add another Flow Decision activity to the Designer panel and connect it to the True branch of the flow decision created in step 11. 
+15.	In the Properties pane, in the Condition field, type cint(TransItem.SpecificContent("OnUSCheck").ToString) < 5000, where: 
+	cint converts a variable of type string to one of type integer. 
+	TransItem is the QueueItem variable (step 18) used to store the items.
+	SpecificContent("OnUSCheck") retrieves the content of the On US Check argument in each item.
+	.ToString converts the content of the QueueItem variable into a variable of type string. 
+	< 5000 is the condition to be checked against. 
+The above expression converts the OnUSCheck value in each QueueItem variable into a string variable, which is then further converted into an integer. The value thus obtained is checked for compliance with the condition. 
+16.	Add a Set Transaction Status activity to the Designer panel, and connect it to the False branch of the previous flow decision (step 13). 
+17.	In the Properties pane, make sure the Status field is set to Failed, and ErrorType to Business. This way, if the value of On US Check is bigger or equal to 5000, the transaction is marked as failed with a business exception. 
+18.	In the TransactionItem field add the TransItem variable. 
+19.	In the Reason field, type "OnUSCheck amount is bigger than 5000" or similar, to display for a failed transaction. 
+20.	Connect the Set Transaction Status activity to the Should Stop activity (step 6), to create a loop and process the next transaction in the queue. 
+21.	Add a Sequence activity to the Designer panel, and connect it to the True branch of the previous flow decision (step 13). Inside the sequence, add a Try Catch activity and configure it such that any potential errors are correctly labeled as application errors when processing the items. 
+22.	Open the UIDemo application, and log in with the username admin and the password password. 
+23.	Perform the following series of activities for each of the Cash In, On Us Check and Not On Us Check fields in the UIDemo application: 
+• Into the previous Try Catch activity, add a Type Into activity. 
+• Click Indicate on screen and select from the UIDemo interface, the blank field corresponding to Cash In. 
+• In the Properties pane, in the Text field, type transItem.SpecificContent("CashIn").ToString. Each term in the expression is explained above (step 15). This expression converts the value in each QueueItem variable into a string variable. 
+• Make sure that the Simulate Type option is selected. 
+24.	On the Design tab, in the Wizards section, click Screen Scraping and point at the transaction number in the UIDemo application.
+25.	From the Screen Scraper Wizard, choose a scraping method and click Finish. This inserts a Screen Scraping activity in your workflow. Make sure to position it after the previous Type Into activities, and set the Text field to a new variable, say TransactionValue. This retrieves the transaction number for each queue item that meets the initial condition. 
+26.	Add a Set Transaction Status activity after the Screen Scraping activity. 
+27.	In the Properties pane, make sure the Status field is set to Successful, and the ErrorType is set to Application. This way, if the set of values is successfully introduced in the application, the status of the transaction is set to Successful, or else labeled as an application exception. 
+28.	In the Output window, define a new argument and add the previously created variable, TransactionValue (step 25) as value.
+29.	In the TransactionItem field, add the TransItem variable. 
+30.	Add a Click activity to the Sequence activity after the Type Into activities. 
+31.	Click Indicate on screen and select the Accept button from the UIDemo interface. Make sure the Simulate Type option is selected. 
+32.	The Try Catch activity should look similar to the following screenshot: 
+33.	Return to the flowchart and connect the previous Sequence activity (step 21) to the Should Stop activity (step 6) to create a loop and process the next transaction in the queue. 
+34.	The flowchart should look similar to the following screenshot: 
+35.	To run the process, click Design > Run. 
+36.	After the execution has ended, you may navigate to https://platform.uipath.com and display the processed transactions with the corresponding processing details: • Successful Transaction 
+• Failed Transaction
+
+d)	Build UiPath Chatbot using Google dialogflow 
+	A chatbot is an artificial intelligence (AI) software that can simulate a conversation (or a chat) with an end user in natural language through messaging applications like – websites, mobile apps or through the telephone.
+There are 2 important steps which will get carried out at the core of chatbot
+They are:
+	User Request
+	Response from chatbot
+Here we go
+As you can see in above picture, a Chatbot returns a response based on input from a user. This process may look simple; in practice, things are quite complex.
+How to create UiPath Chatbot?
+Following are the Steps to create the UiPath Chatbot.
+It requires multiple components tide together to work in coordinated ways. 
+Pre-requisites
+	Google Console — https://console.cloud.google.com/
+	uipath chatbot —  https://chatbot.uipath.com/
+	Dialogflow — https://dialogflow.cloud.google.com/
+	Uipath Orchestrator — https://cloud.uipath.com/
+1.	Create the connection in chatbot.uipath.com as below:
+2.	Now Connect to the“Orchestrator Service”from Orchestrator. Click on the “Connect” button of “Orchestrator Service” .You will get the below screen.
+3.	Enter all thefields in the above form from Orchestrator – https://cloud.uipath.com/ as shown in the below screen
+4.	Copy all the above field sand fill it in to the following screen
+5.	Click on connect and now the connection is established with the orchestrator. Creating the Dialogflow agent
+6.	It will open the below form enter the “Agent name” , select the Default time zone, 
+	Language – English
+7.	Creating the intents – intents are nothing but the conversations between user and the chatbot
+	Add the training phrases in to the intents
+	And the response which you want to give to the end user from the bot as below
+	Google Console
+	Google Console is used to get the – “Service Account” and the Primary key for connecting the –Dialogflow agent present in the Chatbot.uipath.com
+	Now we are done with the “Dialogflow”.
+	Next step Google console
+8.	Open the google console  – https://console.cloud.google.com/ 
+NOTE: The service account is automatically generated from the Google Dialogflow, which is connected to the Google Console internally. Now getting the “Primary Key”
+9.	Get the Jason file and enter the –Primary key. You can find the Primary key as below
+10.	Enter these all details in the below – “Dialogflow agent” in the Chatbot.uipath.com
+	Click Dialogflow agent
+11.	Filling the details in the below form
+	So now we are done with connecting to the dialogflow in the Chatbot.uipath.com
+	Once you are connected to the “Orchestrator Service”, in chatbot.uipath.com, click on the “Map” and you can see the list of process which are present in the Orchestrator you have 	connected.
+	Select the “chatbot_process” from the list of robots. Finally click on “Map”.
+	Now we can see the mapped robot
+12.	Now click on the “Launch”
+	Click on “Test” as shown below:
+	Once the “Test” is clicked the webpage is opened
+	So now user can chat with the chat bot
+	And our “chatbot_process” Robot has simple “Hi” message which is shown finally.
+
